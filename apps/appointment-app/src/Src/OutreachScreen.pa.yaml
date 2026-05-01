@@ -9,7 +9,7 @@
 Screens:
   OutreachScreen:
     Properties:
-      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      LoadingSpinnerColor: =RGBA(37, 99, 235, 1)
       OnHidden: =true
       OnVisible: |-
         =//Get all job addresses that don't have applications
@@ -113,9 +113,9 @@ Screens:
                           ={
                           	Background: ColorValue("White"),
                           	BackgroundSelected: ColorValue("White"),
-                          	BackgroundHover: RGBA(190, 190, 240, 0.1),
+                          	BackgroundHover: RGBA(37, 99, 235, 0.06),
                           	Text: ColorValue("Gray"),
-                          	TextSelected: ColorValue("SlateBlue")
+                          	TextSelected: RGBA(37, 99, 235, 1)
                           }
                         Width: =App.Width
             - BodyContainer4_1:
@@ -194,7 +194,7 @@ Screens:
                                             =If(CurrentPage > 1,
                                                 Set(CurrentPage, CurrentPage - 1)
                                             )
-                                          Text: ="Prevoius"
+                                          Text: ="Previous"
                                     - NextButton:
                                         Control: Button@0.0.45
                                         Properties:
@@ -293,7 +293,7 @@ Screens:
                                   Variant: AutoLayout
                                   Properties:
                                     AlignInContainer: =AlignInContainer.Start
-                                    Fill: =RGBA(15, 108, 189, 1)
+                                    Fill: =RGBA(39, 113, 194, 1)
                                     FillPortions: =0
                                     Height: =30
                                     LayoutDirection: =LayoutDirection.Horizontal

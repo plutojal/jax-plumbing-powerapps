@@ -74,9 +74,9 @@ ComponentDefinitions:
           ={
           	Background: ColorValue("White"),
           	BackgroundSelected: ColorValue("White"),
-          	BackgroundHover: RGBA(190, 190, 240, 0.1),
+          	BackgroundHover: RGBA(37, 99, 235, 0.06),
           	Text: ColorValue("Gray"),
-          	TextSelected: ColorValue("SlateBlue")
+          	TextSelected: RGBA(37, 99, 235, 1)
           }
     Properties:
       Fill: =NavBar.Theme.Background
@@ -119,7 +119,7 @@ ComponentDefinitions:
                   - imgCompany:
                       Control: Image@2.2.3
                       Properties:
-                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderColor: =RGBA(0, 0, 0, 0)
                         Height: =30
                         Image: =download
                         ImagePosition: =ImagePosition.Fill
@@ -136,7 +136,7 @@ ComponentDefinitions:
                         Align: ='TextCanvas.Align'.Start
                         AlignInContainer: =AlignInContainer.Center
                         FillPortions: =1
-                        Font: =Font.Lato
+                        Font: =Font.'Open Sans'
                         FontColor: =NavBar.Theme.Text
                         LayoutMaxHeight: =
                         LayoutMaxWidth: =
@@ -149,7 +149,7 @@ ComponentDefinitions:
                 Control: Gallery@2.15.0
                 Variant: Horizontal
                 Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderColor: =RGBA(0, 0, 0, 0)
                   DelayItemLoading: =false
                   FillPortions: =0
                   Items: =NavBar.Items
@@ -165,10 +165,10 @@ ComponentDefinitions:
                       Control: Label@2.5.1
                       Properties:
                         Align: =Align.Center
-                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderColor: =RGBA(0, 0, 0, 0)
                         Color: =If(ThisItem.Screen = App.ActiveScreen, NavBar.Theme.TextSelected, NavBar.Theme.Text)
                         Fill: =If(ThisItem.Screen = App.ActiveScreen, NavBar.Theme.BackgroundSelected, NavBar.Theme.Background)
-                        Font: =Font.Lato
+                        Font: =Font.'Open Sans'
                         FontWeight: =If(ThisItem.Screen = App.ActiveScreen, FontWeight.Semibold, FontWeight.Normal)
                         Height: =Parent.Height
                         OnSelect: =Select(Parent)
@@ -224,7 +224,7 @@ ComponentDefinitions:
                         Align: ='TextCanvas.Align'.End
                         AlignInContainer: =AlignInContainer.Center
                         FillPortions: =1
-                        Font: =Font.Lato
+                        Font: =Font.'Open Sans'
                         FontColor: =NavBar.Theme.Text
                         LayoutMaxHeight: =
                         LayoutMaxWidth: =
@@ -238,7 +238,7 @@ ComponentDefinitions:
                   - imgUser:
                       Control: Image@2.2.3
                       Properties:
-                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderColor: =RGBA(0, 0, 0, 0)
                         Height: =30
                         Image: =User().Image
                         ImagePosition: =ImagePosition.Fill
