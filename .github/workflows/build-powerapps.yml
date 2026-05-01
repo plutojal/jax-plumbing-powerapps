@@ -15,24 +15,27 @@ jobs:
       - name: Build appointment-app import zip
         run: |
           APP=apps/appointment-app
-          MSAPP_NAME=$(ls $APP/export/apps/*/N*-document.msapp | head -1)
-          APP_ID=$(basename $(dirname $MSAPP_NAME))
+          APP_ID=$(ls $APP/export/apps/)
+          MSAPP_FILENAME=$(ls $APP/export/apps/$APP_ID/N*-document.msapp | xargs basename)
+          TMPDIR=$(mktemp -d)
 
           # Repack src/ into .msapp
           cd $APP/src
-          zip -r ../build/document.msapp .
-          cd ../../..
+          zip -r $TMPDIR/document.msapp . 2>/dev/null
+          cd -
 
-          # Place rebuilt .msapp into export folder
-          cp $APP/build/document.msapp $MSAPP_NAME
+          # Build correct Power Apps import structure
+          mkdir -p $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID
+          cp $APP/export/manifest.json $TMPDIR/pkg/
+          cp $APP/export/apps/$APP_ID/*.json $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID/
+          cp $APP/export/apps/$APP_ID/*-logoSmallFile $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID/ 2>/dev/null || true
+          cp $TMPDIR/document.msapp $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID/$MSAPP_FILENAME
 
-          # Build the Power Apps import zip
-          cd $APP/export
-          zip -r ../../build/AppointmentApp_import.zip manifest.json apps/
-          cd ../../..
-
-          # Clean up intermediate file
-          rm $APP/build/document.msapp
+          # Build the import zip fresh
+          rm -f $APP/build/AppointmentApp_import.zip
+          cd $TMPDIR/pkg
+          zip -r $GITHUB_WORKSPACE/$APP/build/AppointmentApp_import.zip .
+          rm -rf $TMPDIR
 
       - name: Commit updated import zip
         run: |
