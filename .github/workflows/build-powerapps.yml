@@ -6,11 +6,17 @@ on:
     paths:
       - "apps/*/src/**"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install zip
+        run: sudo apt-get install -y zip
 
       - name: Build appointment-app import zip
         run: |
@@ -21,8 +27,8 @@ jobs:
 
           # Repack src/ into .msapp
           cd $APP/src
-          zip -r $TMPDIR/document.msapp . 2>/dev/null
-          cd -
+          zip -r $TMPDIR/document.msapp .
+          cd $GITHUB_WORKSPACE
 
           # Build correct Power Apps import structure
           mkdir -p $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID
