@@ -1,0 +1,251 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  NavBar:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      Company:
+        PropertyKind: Input
+        DisplayName: Company
+        Description: A custom property
+        DataType: Record
+        Default: |-
+          ={Name: "Jax Plumbing"}
+      Items:
+        PropertyKind: Input
+        DisplayName: Items
+        Description: A custom property
+        DataType: Table
+        Default: |-
+          =Table(
+              {
+                  Id: 1,
+                  Name: "Appointments",
+                  Screen: AppointmentScreen
+              },
+              {
+                  Id: 2,
+                  Name: "Customers",
+                  Screen: CustomerScreen
+              },
+              {
+                  Id: 3,
+                  Name: "Addresses",
+                  Screen: AddressesScreen
+              },
+              {
+                  Id: 4,
+                  Name: "Appliances",
+                  Screen: AppliancesScreen
+              },
+              {
+                  Id: 5,
+                  Name: "Servicing",
+                  Screen: ServicingScreen
+              },
+                  {
+                  Id: 6,
+                  Name: "Outreach",
+                  Screen: OutreachScreen
+              },
+              {
+                  Id: 7,
+                  Name: "Project Setup",
+                  Screen: ProjectSetupScreen
+              },
+              {
+                  Id: 8,
+                  Name: "Proj. Scheduler",
+                  Screen: ProjectSchedulerScreen
+              }
+          )
+      Theme:
+        PropertyKind: Input
+        DisplayName: Theme
+        Description: A custom property
+        DataType: Record
+        Default: |-
+          ={
+          	Background: ColorValue("White"),
+          	BackgroundSelected: ColorValue("White"),
+          	BackgroundHover: RGBA(190, 190, 240, 0.1),
+          	Text: ColorValue("Gray"),
+          	TextSelected: ColorValue("SlateBlue")
+          }
+    Properties:
+      Fill: =NavBar.Theme.Background
+      Height: =50
+      Width: =App.Width
+    Children:
+      - conRoot:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - conCompany:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =10
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  PaddingLeft: =20
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =150
+                Children:
+                  - imgCompany:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Image: =download
+                        ImagePosition: =ImagePosition.Fill
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =15
+                        RadiusBottomRight: =15
+                        RadiusTopLeft: =15
+                        RadiusTopRight: =15
+                        Width: =30
+                  - lblCompany:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Start
+                        AlignInContainer: =AlignInContainer.Center
+                        FillPortions: =1
+                        Font: =Font.Lato
+                        FontColor: =NavBar.Theme.Text
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        Size: =12
+                        Text: =NavBar.Company.Name
+                        VerticalAlign: =VerticalAlign.Middle
+            - galMenu:
+                Control: Gallery@2.15.0
+                Variant: Horizontal
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DelayItemLoading: =false
+                  FillPortions: =0
+                  Items: =NavBar.Items
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  ShowScrollbar: =false
+                  TemplatePadding: =0
+                  TemplateSize: =Self.Width / 8
+                  Width: =Self.AllItemsCount * 100 + 150
+                Children:
+                  - lblItem:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =If(ThisItem.Screen = App.ActiveScreen, NavBar.Theme.TextSelected, NavBar.Theme.Text)
+                        Fill: =If(ThisItem.Screen = App.ActiveScreen, NavBar.Theme.BackgroundSelected, NavBar.Theme.Background)
+                        Font: =Font.Lato
+                        FontWeight: =If(ThisItem.Screen = App.ActiveScreen, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Parent.Height
+                        OnSelect: =Select(Parent)
+                        Size: =12
+                        Text: =ThisItem.Name
+                        Width: =Parent.TemplateWidth
+                  - btnSelectItem:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderThickness: =0
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =Color.Transparent
+                        Font: =Font.'Open Sans'
+                        Height: =Parent.Height * 80%
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =NavBar.Theme.BackgroundHover
+                        OnSelect: =Navigate(ThisItem.Screen, ScreenTransition.Fade)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =ColorFade(Self.HoverFill, -20%)
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Text: =
+                        Width: =Parent.TemplateWidth * 90%
+                        X: =(Parent.TemplateWidth - Self.Width) /2
+                        Y: =(Parent.Height - Self.Height) / 2
+            - conUser:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutJustifyContent: =LayoutJustifyContent.End
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  PaddingRight: =20
+                  RadiusBottomLeft: =15
+                  RadiusBottomRight: =15
+                  RadiusTopLeft: =15
+                  RadiusTopRight: =15
+                Children:
+                  - lblUserName:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.End
+                        AlignInContainer: =AlignInContainer.Center
+                        FillPortions: =1
+                        Font: =Font.Lato
+                        FontColor: =NavBar.Theme.Text
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        PaddingRight: =10
+                        Size: =12
+                        Text: =User().FullName
+                        VerticalAlign: =VerticalAlign.Middle
+                        Wrap: =false
+                  - imgUser:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =30
+                        Image: =User().Image
+                        ImagePosition: =ImagePosition.Fill
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        RadiusBottomLeft: =15
+                        RadiusBottomRight: =15
+                        RadiusTopLeft: =15
+                        RadiusTopRight: =15
+                        Width: =30

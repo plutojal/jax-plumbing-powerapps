@@ -1,0 +1,155 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+App:
+  Properties:
+    OnStart: |-
+      =Set(MyUserName, User().FullName);
+
+      Set(
+          ColourScheme,
+          {
+              Agent: {
+                  Background: RGBA(255, 255, 0, 0.2),    // Yellow
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              },
+              'Booked in': {
+                  Background: RGBA(0, 120, 255, 0.2),    // Blue
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              },
+              Completed: {
+                  Background: RGBA(0, 50, 150, 0.2),     // Dark blue
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              },
+              'Do not contact': {
+                  Background: RGBA(255, 0, 0, 0.2),      // Red
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              },
+              'Moved house': {
+                  Background: RGBA(255, 150, 0, 0.2),    // Orange
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              },
+              Query: {
+                  Background: RGBA(150, 0, 255, 0.2),    // Purple
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              },
+              'To contact': {
+                  Background: RGBA(0, 180, 0, 0.2),      // Green
+                  Text: RGBA(0, 0, 0, 1)                 // Black text
+              }
+          }
+      );
+
+      With(
+         {
+            _Low: 
+            Sort(
+               Customers,
+               ID
+            ),
+            _High: 
+            Sort(
+               Customers,
+               ID,
+               SortOrder.Descending
+            )
+         },
+         ClearCollect(
+            colCustomers,
+            _Low,
+            Filter(
+               _High,
+               !(ID in _Low.ID)
+            )
+         )
+      );
+
+      With(
+         {
+            _Low: 
+            Sort(
+               Appointments,
+               ID
+            ),
+            _High: 
+            Sort(
+               Appointments,
+               ID,
+               SortOrder.Descending
+            )
+         },
+         ClearCollect(
+            colAppointments,
+            _Low,
+            Filter(
+               _High,
+               !(ID in _Low.ID)
+            )
+         )
+      );
+
+      With(
+         {
+            _Low: 
+            Sort(
+               Jobs,
+               ID
+            ),
+            _High: 
+            Sort(
+               Jobs,
+               ID,
+               SortOrder.Descending
+            )
+         },
+         ClearCollect(
+            colJobs,
+            _Low,
+            Filter(
+               _High,
+               !(ID in _Low.ID)
+            )
+         )
+      );
+
+      // Job Addresses
+      ClearCollect(
+          colJobAddresses,
+          Filter('Job Addresses', 'ID Val' <= 2000)
+      );
+      Collect(
+          colJobAddresses,
+          Filter('Job Addresses', 'ID Val' > 2000 && 'ID Val' <= 4000)
+      );
+      Collect(
+          colJobAddresses,
+          Filter('Job Addresses', 'ID Val' > 4000 && 'ID Val' <= 6000)
+      );
+      Collect(
+          colJobAddresses,
+          Filter('Job Addresses', 'ID Val' = Blank())
+      );
+
+      // Appliances
+      ClearCollect(
+          colAppliances,
+          Filter(Appliances, IDVal <= 2000)
+      );
+      Collect(
+          colAppliances,
+          Filter(Appliances, IDVal > 2000 && IDVal <= 4000)
+      );
+      Collect(
+          colAppliances,
+          Filter(Appliances, IDVal > 4000 && IDVal <= 6000)
+      );
+      Collect(
+          colAppliances,
+          Filter(Appliances, IDVal = Blank())
+      );
+    Theme: =PowerAppsTheme

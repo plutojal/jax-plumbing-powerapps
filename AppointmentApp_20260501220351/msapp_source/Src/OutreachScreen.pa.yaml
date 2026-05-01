@@ -1,0 +1,783 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  OutreachScreen:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnHidden: =true
+      OnVisible: |-
+        =//Get all job addresses that don't have applications
+        Set(OutreachList, 
+            Filter(colJobAddresses,
+                CountRows(Filter(colAppliances, 'Job Address'.Id = colJobAddresses[@ID])) = 0
+            )
+        );
+
+        // Pagination variables
+        Set(PageSize,50);
+        Set(CurrentPage, 1);
+        Set(TotalRecord, CountRows(OutreachList));
+        Set(TotalPages, RoundUp(TotalRecord/PageSize, 0));
+    Children:
+      - ScreenContainer3_1:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =10
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer2_2:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  FillPortions: =0
+                  Height: =50
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                Children:
+                  - NavBar_8:
+                      Control: CanvasComponent
+                      ComponentName: NavBar
+                      Properties:
+                        Company: |-
+                          ={Name: "Jax Plumbing"}
+                        Fill: =NavBar_8.Theme.Background
+                        FillPortions: =1
+                        Height: =50
+                        Items: |-
+                          =Table(
+                              {
+                                  Id: 1,
+                                  Name: "Appointments",
+                                  Screen: AppointmentScreen
+                              },
+                              {
+                                  Id: 2,
+                                  Name: "Customers",
+                                  Screen: CustomerScreen
+                              },
+                              {
+                                  Id: 3,
+                                  Name: "Addresses",
+                                  Screen: AddressesScreen
+                              },
+                              {
+                                  Id: 4,
+                                  Name: "Appliances",
+                                  Screen: AppliancesScreen
+                              },
+                              {
+                                  Id: 5,
+                                  Name: "Servicing",
+                                  Screen: ServicingScreen
+                              },
+                                  {
+                                  Id: 6,
+                                  Name: "Outreach",
+                                  Screen: OutreachScreen
+                              },
+                              {
+                                  Id: 7,
+                                  Name: "Project Setup",
+                                  Screen: ProjectSetupScreen
+                              },
+                              {
+                                  Id: 8,
+                                  Name: "Proj. Scheduler",
+                                  Screen: ProjectSchedulerScreen
+                              }
+                          )
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Theme: |-
+                          ={
+                          	Background: ColorValue("White"),
+                          	BackgroundSelected: ColorValue("White"),
+                          	BackgroundHover: RGBA(190, 190, 240, 0.1),
+                          	Text: ColorValue("Gray"),
+                          	TextSelected: ColorValue("SlateBlue")
+                          }
+                        Width: =App.Width
+            - BodyContainer4_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  PaddingBottom: =2
+                  PaddingTop: =4
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - RightContainer4_1:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =7
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =16
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =2
+                        PaddingLeft: =2
+                        PaddingRight: =2
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =0
+                      Children:
+                        - Container5_1:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(255, 255, 255, 1)
+                              FillPortions: =0
+                              Height: =60
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =40
+                            Children:
+                              - Container24_1:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =60
+                                    PaddingLeft: =If(OutreachScreen.Size = ScreenSize.Small,8,12)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - PreviousButton:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DisplayMode: =If(CurrentPage > 1, DisplayMode.Edit, DisplayMode.Disabled)
+                                          Icon: ="ChevronLeft"
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |
+                                            =If(CurrentPage > 1,
+                                                Set(CurrentPage, CurrentPage - 1)
+                                            )
+                                          Text: ="Prevoius"
+                                    - NextButton:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DisplayMode: =If(CurrentPage < TotalPages, DisplayMode.Edit, DisplayMode.Disabled)
+                                          Icon: ="ChevronRight"
+                                          Layout: ='ButtonCanvas.Layout'.IconAfter
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =If(CurrentPage < TotalPages,
+                                                Set(CurrentPage, CurrentPage + 1)
+                                            )
+                                          Text: ="Next"
+                                    - StatusComboBox_1:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          InputTextPlaceholder: ="Filter by Status"
+                                          Items: =Choices('Job Addresses'.Status)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Width: =160
+                                    - PriorityComboBox_1:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          InputTextPlaceholder: ="Filter by Priority"
+                                          Items: =Choices('Job Addresses'.Priority)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Width: =160
+                                    - InfoTextInput_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Placeholder: ="Filter by Address or Name"
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.Keypress
+                                          Width: =250
+                                    - RefreshAppointmentsButton_7:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          AlignInContainer: =AlignInContainer.Center
+                                          Icon: ="ArrowSync"
+                                          Layout: ='ButtonCanvas.Layout'.IconAfter
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =Refresh('Job Addresses');
+
+                                            With(
+                                               {
+                                                  _Low: 
+                                                  Sort(
+                                                     'Job Addresses',
+                                                     ID
+                                                  ),
+                                                  _High: 
+                                                  Sort(
+                                                     'Job Addresses',
+                                                     ID,
+                                                     SortOrder.Descending
+                                                  )
+                                               },
+                                               ClearCollect(
+                                                  colJobAddresses,
+                                                  _Low,
+                                                  Filter(
+                                                     _High,
+                                                     !(ID in _Low.ID)
+                                                  )
+                                               )
+                                            );
+                                          Text: =
+                                          Width: =45
+                                          X: =
+                        - MainContainer3_1:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              Fill: =RGBA(255, 255, 255, 1)
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =150
+                              LayoutMinWidth: =300
+                              LayoutOverflowX: =LayoutOverflow.Scroll
+                              LayoutOverflowY: =LayoutOverflow.Scroll
+                            Children:
+                              - ContainerTitles_1:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Start
+                                    Fill: =RGBA(15, 108, 189, 1)
+                                    FillPortions: =0
+                                    Height: =30
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =30
+                                    PaddingBottom: =5
+                                    PaddingLeft: =5
+                                    PaddingRight: =5
+                                    PaddingTop: =5
+                                    Width: =titleSchedulingNotes_1.X + titleSchedulingNotes_1.Width + 10
+                                  Children:
+                                    - titleJobId_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          Height: =30
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="ID"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =60
+                                          X: =
+                                          Y: =
+                                    - titleName_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Cust. Name"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =160
+                                    - titlePhone_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Cust. Phone"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =120
+                                    - titleEmail_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Cust. Email"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =210
+                                    - titleInstallName_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Site Name"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =160
+                                    - titleInstallPhone_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Site Phone"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =120
+                                    - titleStatus_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Status"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titlePriority_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Priority"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleJobAddress_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Job Address"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =360
+                                    - titleAppointmentId_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appt."
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =60
+                                    - titleAppointmentDate_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appt. Date"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleAppointmentTime_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appt. Time"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =90
+                                    - titleAppointmentEngineer_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appt. Engineer"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =160
+                                    - titleSchedulingNotes_1:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Scheduling Notes"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =340
+                              - GalleryData_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Start
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =0
+                                    Items: |+
+                                      =FirstN(
+                                          LastN(
+                                              Filter(OutreachList,
+                                                  (
+                                                      IsBlank(StatusComboBox_1.Selected) ||
+                                                      StatusComboBox_1.Selected.Value = "Select Status" ||
+                                                      StatusComboBox_1.Selected.Value in Status.Value
+                                                  ) &&
+                                                  (
+                                                      IsBlank(PriorityComboBox_1.Selected) ||
+                                                      PriorityComboBox_1.Selected.Value = "Select Priority" ||
+                                                      Priority.Value = PriorityComboBox_1.Selected.Value   
+                                                  ) &&
+                                                  (
+                                                      IsBlank(InfoTextInput_1.Value) ||
+                                                      InfoTextInput_1.Value in Title ||
+                                                      InfoTextInput_1.Value in Customer.Value
+                                                  )
+                                              ),
+                                              CountRows(OutreachList) - (CurrentPage - 1) * PageSize
+                                          ),
+                                          PageSize
+                                      )
+
+
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    TemplatePadding: =10
+                                    TemplateSize: =30
+                                    Width: =titleSchedulingNotes_1.X + titleSchedulingNotes_1.Width + 10
+                                  Children:
+                                    - textSchedulingNotes_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Height: =30
+                                          OnChange: |
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.ID),
+                                                {'Scheduling Notes': textSchedulingNotes_1.Value}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.ID),
+                                                {'Scheduling Notes': textSchedulingNotes_1.Value}
+                                            );
+                                          Value: =ThisItem.'Scheduling Notes'
+                                          Width: =titleSchedulingNotes_1.Width - 10
+                                          X: =dropdownAppointmentEngineer_1.X + dropdownAppointmentEngineer_1.Width + 10
+                                    - dropdownAppointmentEngineer_1:
+                                        Control: DropDown@0.0.45
+                                        Properties:
+                                          DefaultSelectedItems: |-
+                                            =First(
+                                                SortByColumns(
+                                                    Filter(
+                                                        Appointments,
+                                                        'Job Address'.Id = ThisItem.ID
+                                                        && 'Activity Type'.Value = "Service"
+                                                        && 'Job Status'.Value = "Booked-In"
+                                                    ),
+                                                    "Date", SortOrder.Descending
+                                                )
+                                            ).Staff
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Items: =Choices(Appointments.Staff)
+                                          Width: =titleAppointmentEngineer_1.Width - 10
+                                          X: =textAppointmentTime_1.X + textAppointmentTime_1.Width + 10
+                                    - textAppointmentTime_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: |-
+                                            =First(
+                                                SortByColumns(
+                                                    Filter(
+                                                        Appointments,
+                                                        'Job Address'.Id = ThisItem.ID
+                                                        && 'Activity Type'.Value = "Service"
+                                                        && 'Job Status'.Value = "Booked-In"
+                                                    ),
+                                                    "Date", SortOrder.Descending
+                                                )
+                                            ).Time.Value
+                                          Width: =titleAppointmentTime_1.Width - 10
+                                          X: =dateAppointmentDate_1.X + dateAppointmentDate_1.Width + 10
+                                    - dateAppointmentDate_1:
+                                        Control: DatePicker@0.0.46
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          SelectedDate: |-
+                                            =First(
+                                                SortByColumns(
+                                                    Filter(
+                                                        Appointments,
+                                                        'Job Address'.Id = ThisItem.ID 
+                                                        && 'Activity Type'.Value = "Service"
+                                                        && 'Job Status'.Value = "Booked-In"
+                                                    ),
+                                                    "Date", SortOrder.Descending
+                                                )
+                                            ).Date
+                                          Width: =titleAppointmentDate_1.Width - 10
+                                          X: =buttonAppointmentId_1.X + buttonAppointmentId_1.Width + 10
+                                    - buttonAppointmentId_1:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Height: =30
+                                          OnSelect: |-
+                                            =If(buttonAppointmentId_1.Text = "+",
+                                                Navigate(
+                                                    AppointmentScreen, 
+                                                    ScreenTransition.Fade,
+                                                    {recordForAppointmentScreenAddressId: ThisItem.ID,
+                                                    recordForAppointmentScreenCustomerId: ThisItem.Customer.Id,
+                                                    recordForAppointmentScreenAppointmentId: Blank()}
+                                                ),
+                                                Navigate(
+                                                    AppointmentScreen, 
+                                                    ScreenTransition.Fade,
+                                                    {recordForAppointmentScreenAddressId: Blank(),
+                                                    recordForAppointmentScreenCustomerId: Blank(),
+                                                    recordForAppointmentScreenAppointmentId: Int(buttonAppointmentId_1.Text)}
+                                                )
+                                            )
+                                          Text: |-
+                                            =If(!IsBlank(dateAppointmentDate_1.SelectedDate),
+                                                Text(First(
+                                                    SortByColumns(
+                                                        Filter(
+                                                            Appointments,
+                                                            'Job Address'.Id = ThisItem.ID 
+                                                            && 'Activity Type'.Value = "Service"
+                                                            && 'Job Status'.Value = "Booked-In"
+                                                        ),
+                                                        "Date", SortOrder.Descending
+                                                    )
+                                                ).ID), "+")
+                                          Width: =titleAppointmentId_1.Width - 10
+                                          X: =textJobAddress_1.X + textJobAddress_1.Width + 10
+                                    - textJobAddress_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Height: =30
+                                          Value: =ThisItem.'Full Address'
+                                          Width: =titleJobAddress_1.Width - 10
+                                          X: =comboboxPriority_1.X + comboboxPriority_1.Width + 10
+                                    - comboboxPriority_1:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          DefaultSelectedItems: =ThisItem.Priority
+                                          Height: =30
+                                          InputTextPlaceholder: ="Select Priority"
+                                          Items: =Choices('Job Addresses'.Priority)
+                                          OnChange: |-
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.ID),
+                                                {Priority: comboboxPriority_1.Selected}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.ID),
+                                                {Priority: comboboxPriority_1.Selected}
+                                            );
+                                          Width: =titlePriority_1.Width - 10
+                                          X: =comboboxStatus_1.X + comboboxStatus_1.Width + 10
+                                    - comboboxStatus_1:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          DefaultSelectedItems: =ThisItem.Status
+                                          Height: =30
+                                          InputTextPlaceholder: ="Select Status"
+                                          Items: =Choices('Job Addresses'.Status)
+                                          OnChange: |
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.ID),
+                                                {Status: Table(comboboxStatus_1.Selected)}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.ID),
+                                                {Status: Table(comboboxStatus_1.Selected)}
+                                            );
+                                          Width: =titleStatus_1.Width - 10
+                                          X: =textInstallPhone_1.X + textInstallPhone_1.Width + 10
+                                    - textInstallPhone_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Height: =30
+                                          OnChange: |-
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.ID),
+                                                {'Install Phone': textInstallPhone_1.Value}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.ID),
+                                                {'Install Phone': textInstallPhone_1.Value}
+                                            );
+                                          Value: =ThisItem.'Install Phone'
+                                          Width: =titleInstallPhone_1.Width - 10
+                                          X: =textInstallName_1.X + textInstallName_1.Width + 10
+                                    - textInstallName_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Height: =30
+                                          OnChange: |-
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.ID),
+                                                {'Install Name': textInstallName_1.Value}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.ID),
+                                                {'Install Name': textInstallName_1.Value}
+                                            );
+                                          Value: =ThisItem.'Install Name'
+                                          Width: =titleInstallName_1.Width - 10
+                                          X: =textEmail_1.X + textEmail_1.Width + 10
+                                    - textEmail_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Height: =30
+                                          Value: |
+                                            =With(
+                                                {
+                                                    customer: LookUp(colCustomers, ID = ThisItem.Customer.Id)
+                                                },
+                                                If(
+                                                    !IsBlank(customer.Email),
+                                                    customer.Email,
+                                                    customer.'2nd Email'
+                                                )
+                                            )
+                                          Width: =titleEmail_1.Width - 10
+                                          X: =textPhone_1.X + textPhone_1.Width + 10
+                                    - textPhone_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Height: =30
+                                          Value: |-
+                                            =With(
+                                                {
+                                                    customer: LookUp(colCustomers, ID = ThisItem.Customer.Id)
+                                                },
+                                                If(
+                                                    !IsBlank(customer.Mobile),
+                                                    customer.Mobile,
+                                                    customer.Landline
+                                                )
+                                            )
+                                          Width: '=titlePhone_1.Width - 10 '
+                                          X: =textName_1.X + textName_1.Width + 10
+                                    - textName_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Height: =30
+                                          Value: |+
+                                            =LookUp(colCustomers, ID = ThisItem.Customer.Id).'Full Name'
+
+                                          Width: =titleName_1.Width - 10
+                                          X: =buttonJobId_1.X + buttonJobId_1.Width + 10
+                                    - buttonJobId_1:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Primary
+                                          BasePaletteColor: =RGBA(5, 102, 178, 1)
+                                          Height: =30
+                                          OnSelect: |-
+                                            =Navigate(
+                                                AddressesScreen, 
+                                                ScreenTransition.Fade,
+                                                {recordID: ThisItem.ID}
+                                            )
+                                          Text: =ThisItem.ID
+                                          Width: =50

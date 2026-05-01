@@ -1,0 +1,2716 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  AppointmentScreen:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - ScreenContainer1:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =10
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer2_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  FillPortions: =0
+                  Height: =50
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                Children:
+                  - NavBar_3:
+                      Control: CanvasComponent
+                      ComponentName: NavBar
+                      Properties:
+                        Company: |-
+                          ={Name: "Jax Plumbing"}
+                        Fill: =NavBar_3.Theme.Background
+                        FillPortions: =1
+                        Height: =50
+                        Items: |-
+                          =Table(
+                              {
+                                  Id: 1,
+                                  Name: "Appointments",
+                                  Screen: AppointmentScreen
+                              },
+                              {
+                                  Id: 2,
+                                  Name: "Customers",
+                                  Screen: CustomerScreen
+                              },
+                              {
+                                  Id: 3,
+                                  Name: "Addresses",
+                                  Screen: AddressesScreen
+                              },
+                              {
+                                  Id: 4,
+                                  Name: "Appliances",
+                                  Screen: AppliancesScreen
+                              },
+                              {
+                                  Id: 5,
+                                  Name: "Servicing",
+                                  Screen: ServicingScreen
+                              },
+                                  {
+                                  Id: 6,
+                                  Name: "Outreach",
+                                  Screen: OutreachScreen
+                              },
+                              {
+                                  Id: 7,
+                                  Name: "Project Setup",
+                                  Screen: ProjectSetupScreen
+                              },
+                              {
+                                  Id: 8,
+                                  Name: "Proj. Scheduler",
+                                  Screen: ProjectSchedulerScreen
+                              }
+                          )
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Theme: |-
+                          ={
+                          	Background: ColorValue("White"),
+                          	BackgroundSelected: ColorValue("White"),
+                          	BackgroundHover: RGBA(190, 190, 240, 0.1),
+                          	Text: ColorValue("Gray"),
+                          	TextSelected: ColorValue("SlateBlue")
+                          }
+                        Width: =App.Width
+            - BodyContainer2:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  PaddingBottom: =2
+                  PaddingTop: =4
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - SidebarContainer2:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =If(And(AppointmentScreen.Size = ScreenSize.Small, Or(newMode, isItemSelected)), 0, 3)
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        Visible: =If(And(AppointmentScreen.Size = ScreenSize.Small, Or(newMode, isItemSelected)), false, true)
+                      Children:
+                        - SearchContainer2:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(245, 245, 245, 1)
+                              FillPortions: =0
+                              Height: =44
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingRight: =5
+                            Children:
+                              - SearchInput2:
+                                  Control: TextInput@0.0.54
+                                  Properties:
+                                    Height: =44
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    Placeholder: ="Search"
+                                    TriggerOutput: ='TextInputCanvas.TriggerOutput'.Keypress
+                                    Type: ='TextInputCanvas.Type'.Text
+                                    Value: =
+                        - Table2:
+                            Control: Table@1.0.278
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Start
+                              EnableRangeSelection: ='PowerAppsOneGrid.EnableRangeSelection'.Enable
+                              EnableSorting: ='PowerAppsOneGrid.EnableSorting'.Disable
+                              FillPortions: =1
+                              Items: |-
+                                =SortByColumns(
+                                    Filter(colAppointments, 
+                                    Substitute(SearchInput2.Value, " ", "") in Substitute(Title, " ", "") 
+                                    || SearchInput2.Value in Job.Value
+                                    || SearchInput2.Value in 'Activity Type'.Value
+                                    ),
+                                    "Created",
+                                    SortOrder.Descending
+                                )
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              OnSelect: |
+                                =UpdateContext({isItemSelected: true, 
+                                                newMode: false, 
+                                                CurrentItem:Table2.Selected });
+                                UpdateContext({recordForAppointmentScreenAddressId: Blank(),
+                                                recordForAppointmentScreenCustomerId: Blank(),
+                                                recordForAppointmentScreenJobId: Blank(),
+                                                recordForAppointmentScreenActivityType: Blank(),
+                                                recordForAppointmentScreenAppointmentId: Blank(),
+                                                recordForAppointmentScreenApplianceId: Blank()})
+                              ReflowBehavior: ='PowerAppsOneGrid.ReflowBehavior'.ListOnly
+                            Children:
+                              - Date1:
+                                  Control: TableDataField@1.5.0
+                                  Variant: textualColumn
+                                  IsLocked: true
+                                  Properties:
+                                    FieldDisplayName: ="Date"
+                                    FieldName: ="Date"
+                                    FieldType: ="D"
+                                    Order: =4
+                              - Job Address1:
+                                  Control: TableDataField@1.5.0
+                                  Variant: textualColumn
+                                  IsLocked: true
+                                  Properties:
+                                    FieldDisplayName: ="Job Address"
+                                    FieldName: ="JobAddressID"
+                                    FieldType: ="E"
+                                    Order: =3
+                              - Job3:
+                                  Control: TableDataField@1.5.0
+                                  Variant: textualColumn
+                                  Properties:
+                                    FieldDisplayName: ="Job"
+                                    FieldName: ="Job"
+                                    FieldType: ="E"
+                                    Order: =6
+                  - DeleteConfirmDialogContainer2:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        FillPortions: =7
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Visible: =If(deleteMode, true, false)
+                        Width: =0
+                      Children:
+                        - ConfirmDeleteLabelContainer2:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutAlignItems: =LayoutAlignItems.End
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingBottom: =20
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - TextCanvas2:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Center
+                                    FillPortions: =1
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    Size: =16
+                                    Text: ="Are you sure you want to delete this record?"
+                        - ConfirmDeleteButtonBarContainer2:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =15
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutWrap: =true
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - ConfirmDeleteButton2:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    AccessibleLabel: ="Delete"
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    OnSelect: |
+                                      =If(
+                                          !IsBlank(recordForAppointmentScreenAppointmentId),
+                                          Remove(
+                                              Appointments, LookUp(Appointments, ID = recordForAppointmentScreenAppointmentId)
+                                          );,
+                                          Remove(
+                                              Appointments, selectedRecord
+                                          );
+                                      );
+                                      If(
+                                          IsEmpty(
+                                              Errors(
+                                                  Appointments,
+                                                  selectedRecord
+                                              )
+                                          ),
+                                          UpdateContext(
+                                              {
+                                                  CurrentItem: First(Table()),
+                                                  isItemSelected: false,
+                                                  newMode: false,
+                                                  deleteMode: false,
+                                                  recordForAppointmentScreenAddressId: Blank(),
+                                                  recordForAppointmentScreenCustomerId: Blank(),
+                                                  recordForAppointmentScreenAppointmentId: Blank(),
+                                                  recordForAppointmentScreenApplianceId: Blank()
+                                          }
+                                          )
+                                      );
+                                    Text: ="Delete"
+                              - CancelDeleteButton2:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    AccessibleLabel: ="Cancel"
+                                    Appearance: ='ButtonCanvas.Appearance'.Secondary
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    OnSelect: |-
+                                      =UpdateContext({ deleteMode: false })
+                                    Text: ="Cancel"
+                  - RightContainer2:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =7
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =16
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =2
+                        PaddingLeft: =2
+                        PaddingRight: =2
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =If(Or(deleteMode, And(AppointmentScreen.Size = ScreenSize.Small, !newMode, !isItemSelected)), false, true)
+                        Width: =0
+                      Children:
+                        - Container2:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(255, 255, 255, 1)
+                              FillPortions: =0
+                              Height: =60
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =40
+                            Children:
+                              - Container22:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =60
+                                    PaddingLeft: =If(AppointmentScreen.Size = ScreenSize.Small,8,12)
+                                    PaddingRight: =If(AppointmentScreen.Size = ScreenSize.Small,8,12)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - BackIcon2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Icon: ="ArrowLeft"
+                                          Layout: ='ButtonCanvas.Layout'.IconBefore
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =ResetForm(Form2); UpdateContext({ newMode: false, editMode: false, CurrentItem: First(Table2.SelectedItems), isItemSelected:false });
+                                          Text: ="Back"
+                                          Visible: =If(And(AppointmentScreen.Size = ScreenSize.Small, !deleteMode), true, false)
+                                          Width: =If(AppointmentScreen.Size = ScreenSize.Small, 75, 96)
+                                    - NewRecordButton2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Primary
+                                          Icon: ="Add"
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =NewForm(Form2); UpdateContext({ newMode: true });
+                                            UpdateContext({recordForAppointmentScreenAddressId: Blank(),
+                                                            recordForAppointmentScreenCustomerId: Blank(),
+                                                            recordForAppointmentScreenAppointmentId: Blank(),
+                                                            recordForAppointmentScreenApplianceId: Blank()})
+                                          PaddingRight: =5
+                                          Text: ="New"
+                                          Visible: |
+                                            =If(AppointmentScreen.Size = ScreenSize.Small, false, And(!newMode, !deleteMode, IsBlank(recordForAppointmentScreenCustomerId), IsBlank(recordForAppointmentScreenAddressId)))
+                                          Width: =If(AppointmentScreen.Size = ScreenSize.Small, 75, 96)
+                                    - EditButton2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Icon: ="Edit"
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =UpdateContext({ editMode: true, selectedRecord: Table2.Selected })
+                                          Text: ="Edit"
+                                          Visible: =And(!newMode, !deleteMode, IsBlank(recordForAppointmentScreenCustomerId), IsBlank(recordForAppointmentScreenAddressId))
+                                          Width: =If(AppointmentScreen.Size = ScreenSize.Small, 75, 90)
+                                    - DeleteButton2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Icon: ="Delete"
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =UpdateContext({ deleteMode: true, selectedRecord: Table2.Selected })
+                                          Text: ="Delete"
+                                          Visible: =And(!newMode, !deleteMode, IsBlank(recordForAppointmentScreenCustomerId), IsBlank(recordForAppointmentScreenAddressId))
+                                    - FollowUpButton2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Icon: ="Copy"
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |
+                                            =NewForm(Form2); 
+                                            UpdateContext({newMode: true});
+                                            UpdateContext({recordForAppointmentScreenAddressId: Table2.Selected.'Job Address'.Id,
+                                                            recordForAppointmentScreenCustomerId: Table2.Selected.Customer.Id,
+                                                            recordForAppointmentScreenJobId: Table2.Selected.Job.Id,
+                                                            recordForAppointmentScreenActivityType: true,
+                                                            recordForAppointmentScreenAppointmentId: Blank(),
+                                                            recordForAppointmentScreenApplianceId: Blank()})
+                                          Text: ="Follow Up"
+                                          Visible: |
+                                            =If(AppointmentScreen.Size = ScreenSize.Small, false, And(!newMode, !deleteMode, IsBlank(recordForAppointmentScreenCustomerId), IsBlank(recordForAppointmentScreenAddressId)))
+                                          Width: =If(AppointmentScreen.Size = ScreenSize.Small, 75*1.3, 96*1.3)
+                                    - ContainerEmptySpace:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                    - RefreshAppointmentsButton:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          Icon: ="ArrowSync"
+                                          Layout: ='ButtonCanvas.Layout'.IconAfter
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: =Refresh(Appointments)
+                                          Text: =
+                                          Width: =45
+                                          X: =
+                        - MainContainer1:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(255, 255, 255, 1)
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =16
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =150
+                              LayoutMinWidth: =300
+                              LayoutOverflowY: =LayoutOverflow.Scroll
+                              PaddingTop: =8
+                            Children:
+                              - Form2:
+                                  Control: Form@2.4.4
+                                  Layout: Vertical
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    DataSource: =Appointments
+                                    DefaultMode: =If(!IsBlank(recordForAppointmentScreenCustomerId), FormMode.New, newMode, FormMode.New, editMode, FormMode.Edit, FormMode.View)
+                                    FillPortions: =0.85
+                                    Item: |-
+                                      =If(
+                                          !IsBlank(recordForAppointmentScreenAppointmentId),
+                                          LookUp(Appointments, ID = recordForAppointmentScreenAppointmentId),
+                                          CurrentItem
+                                      )
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =100
+                                    LayoutMinWidth: =300
+                                    NumberOfColumns: =2
+                                    OnFailure: =Notify("Cannot save. Please check if there are errors in the form.", NotificationType.Error)
+                                    OnSuccess: |
+                                      =UpdateContext({ CurrentItem: Self.LastSubmit, isItemSelected: false});Notify("Success",NotificationType.Success);ResetForm(Form2);
+                                    Width: =Parent.Width
+                                  Children:
+                                    - Date_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: DateEdit
+                                        IsLocked: true
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Date"
+                                          Default: =ThisItem.Date
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Date)
+                                          Required: =true
+                                          Update: =DataCardValue26.SelectedDate
+                                          Width: =459
+                                          X: =0
+                                          Y: =0
+                                        Children:
+                                          - DataCardKey26:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue26:
+                                              Control: DatePicker@0.0.46
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                EndDate: =Date(Year(Today())+100, 12, 31)
+                                                SelectedDate: =Parent.Default
+                                                StartDate: =Date(1900, 1, 1)
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey26.Y + DataCardKey26.Height + 4
+                                          - ErrorMessage26:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue26.Y + DataCardValue26.Height
+                                          - StarVisible26:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey26.Y
+                                    - Time_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        IsLocked: true
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Time"
+                                          Default: =ThisItem.Time
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Time)
+                                          Required: =true
+                                          Update: =DataCardValue27.Selected
+                                          Width: =459
+                                          X: =1
+                                          Y: =0
+                                        Children:
+                                          - DataCardKey27:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue27:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@Appointments].Time)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey27.Y + DataCardKey27.Height + 4
+                                          - ErrorMessage27:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue27.Y + DataCardValue27.Height
+                                          - StarVisible27:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey27.Y
+                                    - Customer_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="CustomerID"
+                                          Default: =ThisItem.Customer
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Customer)
+                                          Required: =true
+                                          Update: |-
+                                            ={
+                                              '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                                              'Id': DataCardValue13.Selected.ID,
+                                              'Value': DataCardValue13.Selected.Title
+
+                                            }
+                                          Width: =459
+                                          X: =0
+                                          Y: =1
+                                        Children:
+                                          - DataCardKey13:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue13:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: |
+                                                  =If(IsBlank(recordForAppointmentScreenCustomerId),
+                                                      LookUp(colCustomers, ID = ThisItem.Customer.Id),
+                                                      LookUp(colCustomers, ID = recordForAppointmentScreenCustomerId)
+                                                  )
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Search(colCustomers, DataCardValue13.SearchText, Title)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey13.Y + DataCardKey13.Height + 4
+                                              Children:
+                                                - Title4:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Title"
+                                                      FieldName: ="Title"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage31:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue13.Y + DataCardValue13.Height
+                                          - StarVisible31:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey13.Y
+                                    - Staff_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxMultiSelectEdit
+                                        IsLocked: true
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Staff"
+                                          Default: =ThisItem.Staff
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Staff)
+                                          Required: =true
+                                          Update: =DataCardValue48.SelectedItems
+                                          Width: =459
+                                          X: =1
+                                          Y: =1
+                                        Children:
+                                          - DataCardKey49:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue48:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =Parent.Default
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@Appointments].Staff)
+                                                Required: =Parent.Required
+                                                SelectMultiple: =true
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey49.Y + DataCardKey49.Height + 4
+                                          - ErrorMessage45:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue48.Y + DataCardValue48.Height
+                                          - StarVisible45:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey49.Y
+                                    - Job Address_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="JobAddressID"
+                                          Default: =ThisItem.'Job Address'
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Job Address')
+                                          Required: =true
+                                          Update: |-
+                                            ={
+                                              '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                                              'Id': DataCardValue31.Selected.ID,
+                                              'Value': DataCardValue31.Selected.Title
+                                            }
+                                          Width: =459
+                                          X: =0
+                                          Y: =2
+                                        Children:
+                                          - DataCardKey31:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue31:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: |-
+                                                  =If(IsBlank(recordForAppointmentScreenAddressId),
+                                                      LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id),
+                                                      LookUp(colJobAddresses, ID = recordForAppointmentScreenAddressId)
+                                                  )
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Filter(colJobAddresses, Customer.Id = DataCardValue13.Selected.ID)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey31.Y + DataCardKey31.Height + 4
+                                              Children:
+                                                - ID1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="ID"
+                                                      FieldName: ="ID"
+                                                      FieldType: ="n"
+                                                      Order: =2
+                                                - Title3:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    Properties:
+                                                      FieldDisplayName: ="Title"
+                                                      FieldName: ="Title"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage34:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue31.Y + DataCardValue31.Height
+                                          - StarVisible34:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey31.Y
+                                    - Activity Type_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="ActivityType"
+                                          Default: =ThisItem.'Activity Type'
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Activity Type')
+                                          Required: =false
+                                          Update: =DataCardValue29.Selected
+                                          Width: =459
+                                          X: =1
+                                          Y: =2
+                                        Children:
+                                          - DataCardKey29:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue29:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: |-
+                                                  =If(
+                                                      !recordForAppointmentScreenActivityType,
+                                                      Filter(Choices([@Appointments].'Activity Type'), Value = ThisItem.'Activity Type'.Value),
+                                                      Filter(Choices([@Appointments].'Activity Type'), Value = "Follow Up")
+                                                  )
+                                                DisplayMode: =Parent.DisplayMode
+                                                Fill: |-
+                                                  =If(
+                                                      DataCardValue29.Selected.Value = "Service" || 
+                                                      DataCardValue29.Selected.Value = "Breakdown" ||
+                                                      DataCardValue29.Selected.Value = "Quote" || 
+                                                      DataCardValue29.Selected.Value = "General Plumbing" || 
+                                                      DataCardValue29.Selected.Value = "General Heating",
+                                                      RGBA(0, 153, 255, 1),
+                                                      Blank()
+                                                  )
+                                                Items: =Choices([@Appointments].'Activity Type')
+                                                OnChange: |-
+                                                  =If(
+                                                      DataCardValue29.Selected.Value = "Service" && newMode,
+                                                      UpdateContext({ showServiceQuestions: true }),
+                                                      UpdateContext({ showServiceQuestions: false })
+                                                  )
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey29.Y + DataCardKey29.Height + 4
+                                          - ErrorMessage29:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue29.Y + DataCardValue29.Height
+                                          - StarVisible29:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey29.Y
+                                    - Appliances_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxMultiSelectEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Appliance"
+                                          Default: =ThisItem.Appliances
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Appliances)
+                                          Required: =false
+                                          Update: |
+                                            =ForAll(
+                                                DataCardValue25.SelectedItems,
+                                                {
+                                                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                                                    'Id': ID,
+                                                    'Value': Title
+                                                }
+                                            )
+                                          Width: =459
+                                          X: =0
+                                          Y: =3
+                                        Children:
+                                          - DataCardKey20:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue25:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: |
+                                                  =If(IsBlank(recordForAppointmentScreenApplianceId),
+                                                      Filter(colAppliances, ID in ThisItem.Appliances.Id),
+                                                      Filter(colAppliances, ID = recordForAppointmentScreenApplianceId)
+                                                  )
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Filter(colAppliances, 'Job Address'.Id = DataCardValue31.Selected.ID)
+                                                Required: =Parent.Required
+                                                SelectMultiple: =true
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey20.Y + DataCardKey20.Height + 4
+                                              Children:
+                                                - Title8:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Title"
+                                                      FieldName: ="Title"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage19:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue25.Y + DataCardValue25.Height
+                                          - StarVisible19:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey20.Y
+                                    - Created By_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxView
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Author"
+                                          Default: =ThisItem.'Created By'
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Created By')
+                                          Required: =false
+                                          Width: =459
+                                          X: =1
+                                          Y: =3
+                                        Children:
+                                          - DataCardKey38:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue37:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =DisplayMode.View
+                                                Items: =Choices([@Appointments].'Created By')
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey38.Y + DataCardKey38.Height + 4
+                                              Children:
+                                                - DisplayName2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="DisplayName"
+                                                      FieldName: ="DisplayName"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                    - Created_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualView
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Created"
+                                          Default: =ThisItem.Created
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Created)
+                                          Required: =false
+                                          Width: =459
+                                          X: =0
+                                          Y: =4
+                                        Children:
+                                          - DataCardKey46:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =16
+                                          - DataCardValue45:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =DisplayMode.View
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =38
+                                    - Job Status_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxView
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="JobStatus"
+                                          Default: =ThisItem.'Job Status'
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Job Status')
+                                          Required: =true
+                                          Width: =459
+                                          X: =1
+                                          Y: =4
+                                        Children:
+                                          - DataCardKey50:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue49:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =DisplayMode.View
+                                                Items: =Choices([@Appointments].'Job Status')
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey50.Y + DataCardKey50.Height + 4
+                                    - Description of Works_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        IsLocked: true
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="DescriptionofWorks"
+                                          Default: =ThisItem.'Description of Works'
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'DescriptionofWorks')
+                                          Required: =false
+                                          Update: =DataCardValue84.Value
+                                          Width: =459
+                                          X: =0
+                                          Y: =5
+                                        Children:
+                                          - DataCardKey84:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue84:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey84.Y + DataCardKey84.Height + 4
+                                          - ErrorMessage81:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue84.Y + DataCardValue84.Height
+                                          - StarVisible81:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey84.Y
+                                    - Appointment Access Notes_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        IsLocked: true
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="AppointmentAccessNotes"
+                                          Default: =ThisItem.'Appointment Access Notes'
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'AppointmentAccessNotes')
+                                          Required: =false
+                                          Update: =DataCardValue86.Value
+                                          Width: =459
+                                          X: =1
+                                          Y: =5
+                                        Children:
+                                          - DataCardKey86:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue86:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey86.Y + DataCardKey86.Height + 4
+                                          - ErrorMessage83:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue86.Y + DataCardValue86.Height
+                                          - StarVisible83:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey86.Y
+                                    - Rates_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        IsLocked: true
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Rates"
+                                          Default: =ThisItem.Rates
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Rates')
+                                          Required: =false
+                                          Update: =DataCardValue85.Value
+                                          Width: =459
+                                          X: =0
+                                          Y: =6
+                                        Children:
+                                          - DataCardKey85:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue85:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey85.Y + DataCardKey85.Height + 4
+                                          - ErrorMessage82:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue85.Y + DataCardValue85.Height
+                                          - StarVisible82:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey85.Y
+                                    - Activity Notes_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="ActivityNotes"
+                                          Default: |-
+                                            =If(
+                                                DataCardValue29.Selected.Value = "Service" && (newMode || !IsBlank(recordForAppointmentScreenCustomerId)),
+                                                "Which fuel type is the appliance?
+
+                                            Is the appliance working and currently offering hot water and heating? 
+
+                                            Where is the appliance located, and are there any access issues?
+
+                                            Is there more than one appliance to be serviced?
+
+                                            Any other notes for the engineer?",
+
+
+                                            ThisItem.'Activity Notes'
+                                            )
+                                          DisplayName: ="Any Other Info"
+                                          Required: =false
+                                          Update: =DataCardValue33.Value
+                                          Width: =459
+                                          X: =1
+                                          Y: =6
+                                        Children:
+                                          - DataCardKey33:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue33:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey33.Y + DataCardKey33.Height + 4
+                                          - ErrorMessage33:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue33.Y + DataCardValue33.Height
+                                          - StarVisible33:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey33.Y
+                                    - Job_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Job"
+                                          Default: =ThisItem.Job
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Job)
+                                          Required: =false
+                                          Update: |-
+                                            ={
+                                              '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                                              'Id': DataCardValue79.Selected.ID,
+                                              'Value': DataCardValue79.Selected.Title
+                                            }
+                                          Width: =459
+                                          X: =0
+                                          Y: =7
+                                        Children:
+                                          - DataCardKey75:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Job Id"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue79:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: |-
+                                                  =If(IsBlank(recordForAppointmentScreenJobId),
+                                                      LookUp(Jobs, ID = ThisItem.Job.Id),
+                                                      LookUp(Jobs, ID = recordForAppointmentScreenJobId)
+                                                  )
+                                                DisplayMode: =Parent.DisplayMode
+                                                InputTextPlaceholder: ="Only enter Job Id when Activity Type is Follow Up"
+                                                Items: =Filter(colJobs, 'Job Address'.Id = DataCardValue31.Selected.ID)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey75.Y + DataCardKey75.Height + 4
+                                              Children:
+                                                - Attachments2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Attachments"
+                                                      FieldName: ="{Attachments}"
+                                                      FieldType: ="r*"
+                                                      Order: =17
+                                                - Job2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Job"
+                                                      FieldName: ="Job"
+                                                      FieldType: ="E"
+                                                      Order: =16
+                                                - Appliances1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Appliances"
+                                                      FieldName: ="Appliance"
+                                                      FieldType: ="E"
+                                                      Order: =15
+                                                - Update Planner1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Update Planner"
+                                                      FieldName: ="UpdatePlanner"
+                                                      FieldType: ="b"
+                                                      Order: =14
+                                                - Update Calendar1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Update Calendar"
+                                                      FieldName: ="UpdateCalendar"
+                                                      FieldType: ="b"
+                                                      Order: =13
+                                                - Planner Task ID1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Planner Task ID"
+                                                      FieldName: ="PlannerTaskID"
+                                                      FieldType: ="s"
+                                                      Order: =12
+                                                - Outlook Calendar ID1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Outlook Calendar ID"
+                                                      FieldName: ="OutlookCalendarID"
+                                                      FieldType: ="s"
+                                                      Order: =11
+                                                - Job Status1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Job Status"
+                                                      FieldName: ="JobStatus"
+                                                      FieldType: ="E"
+                                                      Order: =10
+                                                - Staff2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Staff"
+                                                      FieldName: ="Staff"
+                                                      FieldType: ="E"
+                                                      Order: =9
+                                                - Time2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Time"
+                                                      FieldName: ="Time"
+                                                      FieldType: ="E"
+                                                      Order: =8
+                                                - Date2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Date"
+                                                      FieldName: ="Date"
+                                                      FieldType: ="D"
+                                                      Order: =7
+                                                - Activity Notes2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Activity Notes"
+                                                      FieldName: ="ActivityNotes"
+                                                      FieldType: ="s"
+                                                      Order: =6
+                                                - Job Address4:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Job Address"
+                                                      FieldName: ="JobAddressID"
+                                                      FieldType: ="E"
+                                                      Order: =5
+                                                - Customer3:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Customer"
+                                                      FieldName: ="CustomerID"
+                                                      FieldType: ="E"
+                                                      Order: =4
+                                                - Activity Type2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Activity Type"
+                                                      FieldName: ="ActivityType"
+                                                      FieldType: ="E"
+                                                      Order: =3
+                                                - Title14:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Title"
+                                                      FieldName: ="Title"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                                - Job Id2:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Job Id"
+                                                      FieldName: ="JobId"
+                                                      FieldType: ="s"
+                                                      Order: =2
+                                          - ErrorMessage76:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue79.Y + DataCardValue79.Height
+                                          - StarVisible76:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey75.Y
+                                    - Title_DataCard4:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="Title"
+                                          Default: |
+                                            =Trim(
+                                                Substitute(
+                                                    Substitute(
+                                                        Substitute(
+                                                            DataCardValue27.Selected.Value & " - " & 
+                                                            DataCardValue26.SelectedDate & " - " & 
+                                                            DataCardValue29.Selected.Value & " - " & 
+                                                            DataCardValue31.Selected.'Full Address' & " - " & 
+                                                            LookUp(colCustomers, ID = DataCardValue13.Selected.ID).'Full Name',
+                                                            "    ", " "
+                                                        ),
+                                                        "   ", " "
+                                                    ),
+                                                    "  ", " "
+                                                )
+                                            )
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,Title)
+                                          MaxLength: =DataSourceInfo([@Appointments], DataSourceInfo.MaxLength, Title)
+                                          Required: =false
+                                          Update: =DataCardValue46.Value
+                                          Visible: =false
+                                          Width: =459
+                                          X: =1
+                                          Y: =7
+                                        Children:
+                                          - DataCardKey47:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue46:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey47.Y + DataCardKey47.Height + 4
+                                          - ErrorMessage35:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue46.Y + DataCardValue46.Height
+                                          - StarVisible35:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey47.Y
+                                    - Update Calendar_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ToggleEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="UpdateCalendar"
+                                          Default: |-
+                                            =If(editMode = true
+                                            && IsBlank(recordForAppointmentScreenApplianceId), 
+                                            true, false)
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Update Calendar')
+                                          Required: =false
+                                          Update: =DataCardValue47.Checked
+                                          Visible: =false
+                                          Width: =459
+                                          X: =0
+                                          Y: =8
+                                        Children:
+                                          - DataCardKey48:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue47:
+                                              Control: Toggle@1.1.5
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                                                Checked: =Parent.Default
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =32
+                                                Label: =""
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey48.Y + DataCardKey48.Height + 4
+                                          - ErrorMessage37:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue47.Y + DataCardValue47.Height
+                                          - StarVisible37:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey48.Y
+                                    - Update Planner_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ToggleEdit
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataField: ="UpdatePlanner"
+                                          Default: |-
+                                            =If(editMode = true
+                                            && IsBlank(recordForAppointmentScreenApplianceId), 
+                                            true, false)
+                                          DisplayName: =DataSourceInfo([@Appointments],DataSourceInfo.DisplayName,'Update Planner')
+                                          Required: =false
+                                          Update: =DataCardValue50.Checked
+                                          Visible: =false
+                                          Width: =459
+                                          X: =1
+                                          Y: =8
+                                        Children:
+                                          - DataCardKey51:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue50:
+                                              Control: Toggle@1.1.5
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                                                Checked: =Parent.Default
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =32
+                                                Label: =""
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey51.Y + DataCardKey51.Height + 4
+                                          - ErrorMessage46:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue50.Y + DataCardValue50.Height
+                                          - StarVisible46:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey51.Y
+                              - ButtonContainer2:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0.15
+                                    Height: =Parent.Height
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutJustifyContent: =LayoutJustifyContent.End
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =50
+                                    LayoutOverflowY: =LayoutOverflow.Scroll
+                                    PaddingRight: =24
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - CancelButton2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Secondary
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |+
+                                            =ResetForm(Form2); 
+                                            UpdateContext({newMode: false, 
+                                                            editMode: false, 
+                                                            CurrentItem: First(Table2.SelectedItems), 
+                                                            isItemSelected:false});
+
+                                            UpdateContext({recordForAppointmentScreenAddressId: Blank(),
+                                                            recordForAppointmentScreenCustomerId: Blank(),
+                                                            recordForAppointmentScreenJobId: Blank(),
+                                                            recordForAppointmentScreenActivityType: Blank(),
+                                                            recordForAppointmentScreenAppointmentId: Blank(),
+                                                            recordForAppointmentScreenApplianceId: Blank()});
+
+                                          Text: ="Cancel"
+                                    - SubmitButton2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Primary
+                                          DisplayMode: =If(editMode || newMode || !IsBlank(recordForAppointmentScreenApplianceId) || !IsBlank(recordForAppointmentScreenCustomerId) || !IsBlank(recordForAppointmentScreenAddressId) , DisplayMode.Edit, DisplayMode.View)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: "=If(\n    IsBlank(DataCardValue26.SelectedDate) ||\n    IsBlank(DataCardValue27.Selected) ||\n    IsBlank(DataCardValue48.Selected) ||\n    IsBlank(DataCardValue13.Selected) ||\n    IsBlank(DataCardValue31.Selected),\n    \n    Notify(\"Please enter more information.\", NotificationType.Error),\n\n    SubmitForm(Form2);\n\n    SubmitForm(FormCustomerDetails);\n    SubmitForm(FormAddressDetails);\n\n    UpdateContext({recordForAppointmentScreenAddressId: Blank(),\n                recordForAppointmentScreenCustomerId: Blank(),\n                recordForAppointmentScreenJobId: Blank(),\n                recordForAppointmentScreenActivityType: Blank(),\n                recordForAppointmentScreenAppointmentId: Blank(),\n                recordForAppointmentScreenApplianceId: Blank()});\n)"
+                                          Text: ="Submit"
+                        - ContainerCustomerDetails:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              FillPortions: =0
+                              Height: =150
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMinHeight: =16
+                              LayoutOverflowY: =LayoutOverflow.Scroll
+                            Children:
+                              - ContainerCustomerDetailTitles:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    BorderColor: =RGBA(39, 113, 194, 1)
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(39, 113, 194, 1)
+                                    FillPortions: =0
+                                    Height: =25
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingLeft: =5
+                                    PaddingRight: =5
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =ContainerCustomerDetails.Width
+                                  Children:
+                                    - titleCustomerDetails:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          Text: ="Customer Details"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =ContainerCustomerDetailTitles.Width/2
+                                    - titleAddressDetails:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          Text: ="Address Details"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =ContainerCustomerDetailTitles.Width/2
+                              - ContainerForms:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                  Children:
+                                    - FormCustomerDetails:
+                                        Control: Form@2.4.4
+                                        Layout: Vertical
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataSource: =Customers
+                                          DefaultMode: =If(editMode || newMode || !IsBlank(recordForAppointmentScreenApplianceId) || !IsBlank(recordForAppointmentScreenCustomerId) || !IsBlank(recordForAppointmentScreenAddressId) , FormMode.Edit, FormMode.View)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Height: =16
+                                          Item: =LookUp(Customers, ID = DataCardValue13.Selected.ID)
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          NumberOfColumns: =2
+                                          Width: =titleCustomerDetails.Width
+                                          X: =40
+                                          Y: =40
+                                        Children:
+                                          - Honorific_DataCard2:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_4"
+                                                Default: =ThisItem.Honorific
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,Honorific)
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, Honorific)
+                                                Required: =false
+                                                Update: =DataCardValue103.Value
+                                                Width: =229
+                                                X: =0
+                                                Y: =0
+                                              Children:
+                                                - DataCardKey103:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue103:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey103.Y + DataCardKey103.Height + 4
+                                                - ErrorMessage99:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue103.Y + DataCardValue103.Height
+                                                - StarVisible99:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey103.Y
+                                          - First Name_DataCard3:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_5"
+                                                Default: =ThisItem.'First Name'
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,'First Name')
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, 'First Name')
+                                                Required: =false
+                                                Update: =DataCardValue100.Value
+                                                Width: =229
+                                                X: =1
+                                                Y: =0
+                                              Children:
+                                                - DataCardKey100:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue100:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey100.Y + DataCardKey100.Height + 4
+                                                - ErrorMessage96:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue100.Y + DataCardValue100.Height
+                                                - StarVisible96:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey100.Y
+                                          - Last Name_DataCard3:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_6"
+                                                Default: =ThisItem.'Last Name'
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,'Last Name')
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, 'Last Name')
+                                                Required: =false
+                                                Update: =DataCardValue101.Value
+                                                Width: =229
+                                                X: =0
+                                                Y: =1
+                                              Children:
+                                                - DataCardKey101:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue101:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey101.Y + DataCardKey101.Height + 4
+                                                - ErrorMessage97:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue101.Y + DataCardValue101.Height
+                                                - StarVisible97:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey101.Y
+                                          - Company Name_DataCard3:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_7"
+                                                Default: =ThisItem.'Company Name'
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,'Company Name')
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, 'Company Name')
+                                                Required: =false
+                                                Update: =DataCardValue104.Value
+                                                Width: =229
+                                                X: =1
+                                                Y: =1
+                                              Children:
+                                                - DataCardKey104:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue104:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey104.Y + DataCardKey104.Height + 4
+                                                - ErrorMessage100:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue104.Y + DataCardValue104.Height
+                                                - StarVisible100:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey104.Y
+                                          - Landline_DataCard2:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_14"
+                                                Default: =ThisItem.Landline
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,Landline)
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, Landline)
+                                                Required: =false
+                                                Update: =DataCardValue105.Value
+                                                Width: =229
+                                                X: =0
+                                                Y: =2
+                                              Children:
+                                                - DataCardKey105:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue105:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey105.Y + DataCardKey105.Height + 4
+                                                - ErrorMessage101:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue105.Y + DataCardValue105.Height
+                                                - StarVisible101:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey105.Y
+                                          - Mobile_DataCard3:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_15"
+                                                Default: =ThisItem.Mobile
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,Mobile)
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, Mobile)
+                                                Required: =false
+                                                Update: =DataCardValue106.Value
+                                                Width: =229
+                                                X: =1
+                                                Y: =2
+                                              Children:
+                                                - DataCardKey106:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue106:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey106.Y + DataCardKey106.Height + 4
+                                                - ErrorMessage102:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue106.Y + DataCardValue106.Height
+                                                - StarVisible102:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey106.Y
+                                          - Email_DataCard4:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_16"
+                                                Default: =ThisItem.Email
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,Email)
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, Email)
+                                                Required: =false
+                                                Update: =DataCardValue107.Value
+                                                Width: =229
+                                                X: =0
+                                                Y: =3
+                                              Children:
+                                                - DataCardKey107:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue107:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey107.Y + DataCardKey107.Height + 4
+                                                - ErrorMessage103:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue107.Y + DataCardValue107.Height
+                                                - StarVisible103:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey107.Y
+                                          - 2nd Email_DataCard2:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_17"
+                                                Default: =ThisItem.'2nd Email'
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,'2nd Email')
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, '2nd Email')
+                                                Required: =false
+                                                Update: =DataCardValue108.Value
+                                                Width: =229
+                                                X: =1
+                                                Y: =3
+                                              Children:
+                                                - DataCardKey108:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue108:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey108.Y + DataCardKey108.Height + 4
+                                                - ErrorMessage104:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue108.Y + DataCardValue108.Height
+                                                - StarVisible104:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey108.Y
+                                          - Full Name_DataCard2:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_3"
+                                                Default: =ThisItem.'Full Name'
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,'Full Name')
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, 'Full Name')
+                                                Required: =false
+                                                Update: =DataCardValue36.Value
+                                                Visible: =false
+                                                Width: =229
+                                                X: =0
+                                                Y: =4
+                                              Children:
+                                                - DataCardKey37:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue36:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: |-
+                                                        =If(IsBlank(DataCardValue104.Value),
+                                                            DataCardValue103.Value & " " & DataCardValue100.Value & " " & DataCardValue101.Value,
+                                                            DataCardValue104.Value
+                                                        )
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey37.Y + DataCardKey37.Height + 4
+                                                - ErrorMessage36:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue36.Y + DataCardValue36.Height
+                                                - StarVisible36:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey37.Y
+                                          - Title_DataCard7:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="Title"
+                                                Default: =ThisItem.Title
+                                                DisplayName: =DataSourceInfo([@Customers],DataSourceInfo.DisplayName,Title)
+                                                MaxLength: =DataSourceInfo([@Customers], DataSourceInfo.MaxLength, Title)
+                                                Required: =false
+                                                Update: =DataCardValue90.Value
+                                                Visible: =false
+                                                Width: =229
+                                                X: =1
+                                                Y: =4
+                                              Children:
+                                                - DataCardKey90:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue90:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =DataCardValue36.Value & " - " & ThisItem.'Full Address'
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey90.Y + DataCardKey90.Height + 4
+                                                - ErrorMessage86:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue90.Y + DataCardValue90.Height
+                                                - StarVisible86:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey90.Y
+                                    - FormAddressDetails:
+                                        Control: Form@2.4.4
+                                        Layout: Vertical
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          DataSource: ='Job Addresses'
+                                          DefaultMode: =If(editMode || newMode || !IsBlank(recordForAppointmentScreenApplianceId) || !IsBlank(recordForAppointmentScreenCustomerId) || !IsBlank(recordForAppointmentScreenAddressId) , FormMode.Edit, FormMode.View)
+                                          Fill: =RGBA(255, 255, 255, 1)
+                                          Item: =LookUp('Job Addresses', ID = DataCardValue31.Selected.ID)
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          NumberOfColumns: =2
+                                        Children:
+                                          - Install Name_DataCard2:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_11"
+                                                Default: =ThisItem.'Install Name'
+                                                DisplayName: =DataSourceInfo([@'Job Addresses'],DataSourceInfo.DisplayName,'Install Name')
+                                                MaxLength: =DataSourceInfo([@'Job Addresses'], DataSourceInfo.MaxLength, 'Install Name')
+                                                Required: =false
+                                                Update: =DataCardValue117.Value
+                                                Width: =225
+                                                X: =0
+                                                Y: =0
+                                              Children:
+                                                - DataCardKey117:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue117:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey117.Y + DataCardKey117.Height + 4
+                                                - ErrorMessage113:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue117.Y + DataCardValue117.Height
+                                                - StarVisible113:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey117.Y
+                                          - Install Phone_DataCard2:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_12"
+                                                Default: =ThisItem.'Install Phone'
+                                                DisplayName: =DataSourceInfo([@'Job Addresses'],DataSourceInfo.DisplayName,'Install Phone')
+                                                MaxLength: =DataSourceInfo([@'Job Addresses'], DataSourceInfo.MaxLength, 'Install Phone')
+                                                Required: =false
+                                                Update: =DataCardValue118.Value
+                                                Width: =225
+                                                X: =1
+                                                Y: =0
+                                              Children:
+                                                - DataCardKey118:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue118:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey118.Y + DataCardKey118.Height + 4
+                                                - ErrorMessage114:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue118.Y + DataCardValue118.Height
+                                                - StarVisible114:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey118.Y
+                                          - Email_DataCard6:
+                                              Control: TypedDataCard@1.0.7
+                                              Variant: TextualEdit
+                                              IsLocked: true
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                DataField: ="field_9"
+                                                Default: =ThisItem.Email
+                                                DisplayName: =DataSourceInfo([@'Job Addresses'],DataSourceInfo.DisplayName,Email)
+                                                MaxLength: =DataSourceInfo([@'Job Addresses'], DataSourceInfo.MaxLength, Email)
+                                                Required: =false
+                                                Update: =DataCardValue120.Value
+                                                Width: =225
+                                                X: =0
+                                                Y: =1
+                                              Children:
+                                                - DataCardKey120:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldName
+                                                    Properties:
+                                                      Height: =22
+                                                      Text: =Parent.DisplayName
+                                                      Weight: ='TextCanvas.Weight'.Semibold
+                                                      Width: =Parent.Width - 48
+                                                      Wrap: =false
+                                                      X: =24
+                                                      Y: =10
+                                                - DataCardValue120:
+                                                    Control: TextInput@0.0.54
+                                                    MetadataKey: FieldValue
+                                                    Properties:
+                                                      AccessibleLabel: =Parent.DisplayName
+                                                      DisplayMode: =Parent.DisplayMode
+                                                      Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                      Required: =Parent.Required
+                                                      ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                      Value: =Parent.Default
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardKey120.Y + DataCardKey120.Height + 4
+                                                - ErrorMessage116:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: ErrorMessage
+                                                    Properties:
+                                                      Height: =30
+                                                      Text: =Parent.Error
+                                                      Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =Parent.Width - 48
+                                                      X: =24
+                                                      Y: =DataCardValue120.Y + DataCardValue120.Height
+                                                - StarVisible116:
+                                                    Control: Text@0.0.51
+                                                    MetadataKey: FieldRequired
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Center
+                                                      Height: =30
+                                                      Text: ="*"
+                                                      Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                      Width: =30
+                                                      Y: =DataCardKey120.Y

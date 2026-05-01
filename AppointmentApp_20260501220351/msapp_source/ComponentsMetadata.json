@@ -1,0 +1,11 @@
+{
+  "Components": [
+    {
+      "Name": "NavBar",
+      "TemplateName": "27dd9a1f892c4ae7ab8e7bbddf244ac8",
+      "Description": "",
+      "AllowCustomization": true,
+      "AllowAccessToGlobals": false
+    }
+  ]
+}

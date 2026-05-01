@@ -1,0 +1,1016 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  ServicingScreen:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - ScreenContainer3:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =10
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer2:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  FillPortions: =0
+                  Height: =50
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                Children:
+                  - NavBar_2:
+                      Control: CanvasComponent
+                      ComponentName: NavBar
+                      Properties:
+                        Company: |-
+                          ={Name: "Jax Plumbing"}
+                        Fill: =NavBar_2.Theme.Background
+                        FillPortions: =1
+                        Height: =50
+                        Items: |-
+                          =Table(
+                              {
+                                  Id: 1,
+                                  Name: "Appointments",
+                                  Screen: AppointmentScreen
+                              },
+                              {
+                                  Id: 2,
+                                  Name: "Customers",
+                                  Screen: CustomerScreen
+                              },
+                              {
+                                  Id: 3,
+                                  Name: "Addresses",
+                                  Screen: AddressesScreen
+                              },
+                              {
+                                  Id: 4,
+                                  Name: "Appliances",
+                                  Screen: AppliancesScreen
+                              },
+                              {
+                                  Id: 5,
+                                  Name: "Servicing",
+                                  Screen: ServicingScreen
+                              },
+                                  {
+                                  Id: 6,
+                                  Name: "Outreach",
+                                  Screen: OutreachScreen
+                              },
+                              {
+                                  Id: 7,
+                                  Name: "Project Setup",
+                                  Screen: ProjectSetupScreen
+                              },
+                              {
+                                  Id: 8,
+                                  Name: "Proj. Scheduler",
+                                  Screen: ProjectSchedulerScreen
+                              }
+                          )
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        Theme: |-
+                          ={
+                          	Background: ColorValue("White"),
+                          	BackgroundSelected: ColorValue("White"),
+                          	BackgroundHover: RGBA(190, 190, 240, 0.1),
+                          	Text: ColorValue("Gray"),
+                          	TextSelected: ColorValue("SlateBlue")
+                          }
+                        Width: =App.Width
+            - BodyContainer4:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  PaddingBottom: =2
+                  PaddingTop: =4
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - RightContainer4:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =7
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =16
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingBottom: =2
+                        PaddingLeft: =2
+                        PaddingRight: =2
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =0
+                      Children:
+                        - Container5:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(255, 255, 255, 1)
+                              FillPortions: =0
+                              Height: =60
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =40
+                            Children:
+                              - Container24:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =60
+                                    PaddingLeft: =If(ServicingScreen.Size = ScreenSize.Small,8,12)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - StartDatePicker:
+                                        Control: DatePicker@0.0.46
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DateTimeZone: ='DatePickerCanvas.DateTimeZone'.UTC
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Placeholder: ="Select a start date..."
+                                          SelectedDate: =Today()
+                                          Width: =160
+                                    - EndDatePicker:
+                                        Control: DatePicker@0.0.46
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DateTimeZone: ='DatePickerCanvas.DateTimeZone'.UTC
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Placeholder: ="Select a end date..."
+                                          SelectedDate: =DateAdd(Today(), 30)
+                                          Width: =160
+                                    - StatusComboBox:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          InputTextPlaceholder: ="Filter by Status"
+                                          Items: =Choices(Appliances.Status)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Width: =160
+                                    - InfoTextInput:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Placeholder: ="Filter by Address or Name"
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.Keypress
+                                          Width: =250
+                                    - GlobalTextSearch:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Placeholder: ="All Customers (Ignores Date Range)"
+                                          Width: =250
+                                    - SortDateToggle:
+                                        Control: Toggle@1.1.5
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          Checked: =true
+                                          Label: ="Date Order Asc."
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Width: =220
+                                    - RefreshAppointmentsButton_4:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          AlignInContainer: =AlignInContainer.Center
+                                          Icon: ="ArrowSync"
+                                          Layout: ='ButtonCanvas.Layout'.IconAfter
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          OnSelect: |-
+                                            =Refresh(Appliances);
+
+                                            With(
+                                               {
+                                                  _Low: 
+                                                  Sort(
+                                                     Appliances,
+                                                     ID
+                                                  ),
+                                                  _High: 
+                                                  Sort(
+                                                     Appliances,
+                                                     ID,
+                                                     SortOrder.Descending
+                                                  )
+                                               },
+                                               ClearCollect(
+                                                  colAppliances,
+                                                  _Low,
+                                                  Filter(
+                                                     _High,
+                                                     !(ID in _Low.ID)
+                                                  )
+                                               )
+                                            );
+                                          Text: =
+                                          Width: =45
+                                          X: =
+                        - MainContainer3:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              Fill: =RGBA(255, 255, 255, 1)
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =150
+                              LayoutMinWidth: =300
+                              LayoutOverflowX: =LayoutOverflow.Scroll
+                              LayoutOverflowY: =LayoutOverflow.Scroll
+                            Children:
+                              - ContainerTitles:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Start
+                                    Fill: =RGBA(15, 108, 189, 1)
+                                    FillPortions: =0
+                                    Height: =30
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinHeight: =30
+                                    PaddingBottom: =5
+                                    PaddingLeft: =5
+                                    PaddingRight: =5
+                                    PaddingTop: =5
+                                    Width: =titleSchedulingNotes.X + titleSchedulingNotes.Width + 10
+                                  Children:
+                                    - titleJobId:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          Height: =30
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="ID"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =60
+                                          X: =
+                                          Y: =
+                                    - titleJobAddress:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Job Address"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =360
+                                    - titleName:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Cust. Name"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =160
+                                    - titlePhone:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Cust. Phone"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =120
+                                    - titleEmail:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Cust. Email"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =210
+                                    - titleInstallName:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Site Name"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =160
+                                    - titleInstallPhone:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Site Phone"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =120
+                                    - titleStatus:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Status"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleServiceDue:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Service Due"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleAppliancesId:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appliance"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: |
+                                            =100
+                                    - titleApplianceName:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appliance Name"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =260
+                                    - titleApplianceFuelType:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Fuel Type"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleJobAddress2:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Job Address"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =360
+                                    - titleAppointmentId:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appointment"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =100
+                                    - titleAppointmentDate:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appointment Date"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleAppointmentTime:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appointment Time"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =150
+                                    - titleAppointmentEngineer:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Appointment Engineer"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =160
+                                    - titleSchedulingNotes:
+                                        Control: Text@0.0.51
+                                        Properties:
+                                          Align: ='TextCanvas.Align'.Center
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          Text: ="Scheduling Notes"
+                                          Weight: ='TextCanvas.Weight'.Bold
+                                          Width: =440
+                              - GalleryData:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Start
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =0
+                                    Items: |+
+                                      =With(
+                                          {
+                                              filteredData: If(
+                                                  IsBlank(GlobalTextSearch.Value),
+                                                  Filter(
+                                                      colAppliances,
+                                                      'Service Due' >= StartDatePicker.SelectedDate &&
+                                                      'Service Due' <= EndDatePicker.SelectedDate &&
+                                                      (
+                                                          IsBlank(StatusComboBox.Selected) ||
+                                                          StatusComboBox.Selected.Value = "Select Status" ||
+                                                          Status.Value = StatusComboBox.Selected.Value
+                                                      ) &&
+                                                      (
+                                                          IsBlank(InfoTextInput.Value) ||
+                                                          InfoTextInput.Value in 'Job Address'.Value ||
+                                                          InfoTextInput.Value in Customer.Value
+                                                      )
+                                                  ),
+                                                  Filter(
+                                                      colAppliances,
+                                                      GlobalTextSearch.Value in 'Job Address'.Value ||
+                                                      GlobalTextSearch.Value in Customer.Value
+                                                  )
+                                              )
+                                          },
+                                          SortByColumns(
+                                              filteredData,
+                                              "field_7",
+                                              If(SortDateToggle.Checked, SortOrder.Ascending, SortOrder.Descending)
+                                          )
+                                      )
+
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    TemplatePadding: =10
+                                    TemplateSize: =30
+                                    Width: =titleSchedulingNotes.X + titleSchedulingNotes.Width + 10
+                                  Children:
+                                    - textSchedulingNotes:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          OnChange: |
+                                            =Patch(
+                                                Appliances,
+                                                LookUp(Appliances, ID = ThisItem.ID),
+                                                {'Scheduling Notes': textSchedulingNotes.Value}
+                                            );
+                                            Patch(
+                                                colAppliances,
+                                                LookUp(colAppliances, ID = ThisItem.ID),
+                                                {'Scheduling Notes': textSchedulingNotes.Value}
+                                            );
+                                          Value: =ThisItem.'Scheduling Notes'
+                                          Width: =440
+                                          X: =dropdownAppointmentEngineer.X + dropdownAppointmentEngineer.Width + 10
+                                    - dropdownAppointmentEngineer:
+                                        Control: DropDown@0.0.45
+                                        Properties:
+                                          DefaultSelectedItems: |-
+                                            =First(
+                                                SortByColumns(
+                                                    Filter(
+                                                        colAppointments,
+                                                        'Job Address'.Id = ThisItem.'Job Address'.Id 
+                                                        && ThisItem.ID in Appliances.Id
+                                                        && 'Activity Type'.Value = "Service"
+                                                        && 'Job Status'.Value = "Booked-In"
+                                                        && Date >= DateAdd(Today(), -3, TimeUnit.Months) 
+                                                    ),
+                                                    "Date", SortOrder.Descending
+                                                )
+                                            ).Staff
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Items: =Choices(Appointments.Staff)
+                                          Width: =150
+                                          X: =textAppointmentTime.X + textAppointmentTime.Width + 10
+                                    - textAppointmentTime:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: |-
+                                            =First(
+                                                SortByColumns(
+                                                    Filter(
+                                                        colAppointments,
+                                                        'Job Address'.Id = ThisItem.'Job Address'.Id 
+                                                        && ThisItem.ID in Appliances.Id
+                                                        && 'Activity Type'.Value = "Service"
+                                                        && 'Job Status'.Value = "Booked-In"
+                                                        && Date >= DateAdd(Today(), -3, TimeUnit.Months) 
+                                                    ),
+                                                    "Date", SortOrder.Descending
+                                                )
+                                            ).Time.Value
+                                          Width: =140
+                                          X: =dateAppointmentDate.X + dateAppointmentDate.Width + 10
+                                    - dateAppointmentDate:
+                                        Control: DatePicker@0.0.46
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          SelectedDate: |-
+                                            =First(
+                                                SortByColumns(
+                                                    Filter(
+                                                        colAppointments,
+                                                        'Job Address'.Id = ThisItem.'Job Address'.Id 
+                                                        && ThisItem.ID in Appliances.Id
+                                                        && 'Activity Type'.Value = "Service"
+                                                        && 'Job Status'.Value = "Booked-In"
+                                                        && Date >= DateAdd(Today(), -3, TimeUnit.Months) 
+                                                    ),
+                                                    "Date", SortOrder.Descending
+                                                )
+                                            ).Date
+                                          Width: =140
+                                          X: =buttonAppointmentId.X + buttonAppointmentId.Width + 10
+                                    - buttonAppointmentId:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Height: =30
+                                          OnSelect: |-
+                                            =If(buttonAppointmentId.Text = "+",
+                                                Navigate(
+                                                    AppointmentScreen, 
+                                                    ScreenTransition.Fade,
+                                                    {recordForAppointmentScreenAddressId: ThisItem.'Job Address'.Id,
+                                                    recordForAppointmentScreenCustomerId: ThisItem.Customer.Id,
+                                                    recordForAppointmentScreenApplianceId: ThisItem.ID,
+                                                    recordForAppointmentScreenAppointmentId: Blank()}
+                                                ),
+                                                Navigate(
+                                                    AppointmentScreen, 
+                                                    ScreenTransition.Fade,
+                                                    {recordForAppointmentScreenAddressId: Blank(),
+                                                    recordForAppointmentScreenCustomerId: Blank(),
+                                                    recordForAppointmentScreenApplianceId: Blank(),
+                                                    recordForAppointmentScreenAppointmentId: Int(buttonAppointmentId.Text)}
+                                                )
+                                            )
+                                          Text: |-
+                                            =If(!IsBlank(dateAppointmentDate.SelectedDate),
+                                                Text(First(
+                                                    SortByColumns(
+                                                        Filter(
+                                                            colAppointments,
+                                                            'Job Address'.Id = ThisItem.'Job Address'.Id 
+                                                            && ThisItem.ID in Appliances.Id
+                                                            && 'Activity Type'.Value = "Service"
+                                                            && 'Job Status'.Value = "Booked-In"
+                                                            && Date >= DateAdd(Today(), -3, TimeUnit.Months)  
+
+                                                        ),
+                                                        "Date", SortOrder.Descending
+                                                    )
+                                                ).ID), "+")
+                                          Width: =90
+                                          X: =textJobAddress2.X + textJobAddress2.Width + 10
+                                    - textJobAddress2:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: =LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id).'Full Address'
+                                          Width: =350
+                                          X: =comboboxApplianceFuelType.X + comboboxApplianceFuelType.Width + 10
+                                    - comboboxApplianceFuelType:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          DefaultSelectedItems: =ThisItem.'Fuel Type'
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          InputTextPlaceholder: =""
+                                          Items: =Choices(Appliances.'Fuel Type')
+                                          OnChange: |-
+                                            =Patch(
+                                                Appliances,
+                                                LookUp(Appliances, ID = ThisItem.ID),
+                                                {'Fuel Type': comboboxApplianceFuelType.Selected,
+                                                Title: Trim(comboboxApplianceFuelType.Selected.Value) & " - " & Trim(ThisItem.'Appliance Make') & " - " & Trim(ThisItem.'Appliance Model')
+                                                & If(!IsBlank(Trim(ThisItem.'Appliance Type')), " - " & Trim(ThisItem.'Appliance Type'), "")}
+                                            );
+                                            Patch(
+                                                colAppliances,
+                                                LookUp(colAppliances, ID = ThisItem.ID),
+                                                {'Fuel Type': comboboxApplianceFuelType.Selected,
+                                                Title: Trim(comboboxApplianceFuelType.Selected.Value) & " - " & Trim(ThisItem.'Appliance Make') & " - " & Trim(ThisItem.'Appliance Model')
+                                                & If(!IsBlank(Trim(ThisItem.'Appliance Type')), " - " & Trim(ThisItem.'Appliance Type'), "")}
+                                            );
+                                          Width: =140
+                                          X: =textApplianceName.X + textApplianceName.Width + 10
+                                    - textApplianceName:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: =ThisItem.Title
+                                          Width: =250
+                                          X: =buttonAppliancesId.X + buttonAppliancesId.Width + 10
+                                    - buttonAppliancesId:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Height: =30
+                                          OnSelect: |-
+                                            =Navigate(
+                                                AppliancesScreen, 
+                                                ScreenTransition.Fade,
+                                                {recordForAppliancesScreenApplianceId: ThisItem.ID}
+                                            )
+                                          Text: =ThisItem.ID
+                                          Width: =90
+                                          X: =dateServiceDue.X + dateServiceDue.Width + 10
+                                    - dateServiceDue:
+                                        Control: DatePicker@0.0.46
+                                        Properties:
+                                          Appearance: ='DatePickerCanvas.Appearance'.FilledDarker
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          SelectedDate: =ThisItem.'Service Due'
+                                          Width: =140
+                                          X: =1340
+                                    - comboboxStatus:
+                                        Control: ComboBox@0.0.51
+                                        Properties:
+                                          DefaultSelectedItems: =ThisItem.Status
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          InputTextPlaceholder: ="Select Status"
+                                          Items: =Choices(Appliances.Status)
+                                          OnChange: |
+                                            =Patch(
+                                                Appliances,
+                                                LookUp(Appliances, ID = ThisItem.ID),
+                                                {Status: comboboxStatus.Selected}
+                                            );
+                                            Patch(
+                                                colAppliances,
+                                                LookUp(colAppliances, ID = ThisItem.ID),
+                                                {Status: comboboxStatus.Selected}
+                                            );
+                                          Width: =140
+                                          X: =1190
+                                    - textInstallPhone:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          OnChange: |-
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.'Job Address'.Id),
+                                                {'Install Phone': textInstallPhone.Value}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id),
+                                                {'Install Phone': textInstallPhone.Value}
+                                            );
+                                          Value: =LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id).'Install Phone'
+                                          Width: =110
+                                          X: =1070
+                                    - textInstallName:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          OnChange: |-
+                                            =Patch(
+                                                'Job Addresses',
+                                                LookUp('Job Addresses', ID = ThisItem.'Job Address'.Id),
+                                                {'Install Name': textInstallName.Value}
+                                            );
+                                            Patch(
+                                                colJobAddresses,
+                                                LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id),
+                                                {'Install Name': textInstallName.Value}
+                                            );
+                                          Value: =LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id).'Install Name'
+                                          Width: =150
+                                          X: =910
+                                    - textEmail:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: |
+                                            =With(
+                                                {
+                                                    customer: LookUp(colCustomers, ID = ThisItem.Customer.Id)
+                                                },
+                                                If(
+                                                    !IsBlank(customer.Email),
+                                                    customer.Email,
+                                                    customer.'2nd Email'
+                                                )
+                                            )
+                                          Width: =200
+                                          X: =700
+                                    - textPhone:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: |-
+                                            =With(
+                                                {
+                                                    customer: LookUp(colCustomers, ID = ThisItem.Customer.Id)
+                                                },
+                                                If(
+                                                    !IsBlank(customer.Mobile),
+                                                    customer.Mobile,
+                                                    customer.Landline
+                                                )
+                                            )
+                                          Width: =110
+                                          X: =580
+                                    - textName:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: |+
+                                            =LookUp(colCustomers, ID = ThisItem.Customer.Id).'Full Name'
+
+                                          Width: =150
+                                          X: =420
+                                    - textJobAddress:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: |-
+                                            =Switch(
+                                                ThisItem.Status.Value,
+                                                "Agent", ColourScheme.Agent.Background,
+                                                "Booked in", ColourScheme.'Booked in'.Background,
+                                                "Completed", ColourScheme.Completed.Background,
+                                                "Do not contact", ColourScheme.'Do not contact'.Background,
+                                                "Moved house", ColourScheme.'Moved house'.Background,
+                                                "Query", ColourScheme.Query.Background,
+                                                "To contact", ColourScheme.'To contact'.Background,
+                                                RGBA(0, 0, 0, 0) // Default
+                                            )
+                                          Height: =30
+                                          Value: =LookUp(colJobAddresses, ID = ThisItem.'Job Address'.Id).'Full Address'
+                                          Width: =350
+                                          X: =60
+                                    - buttonJobId:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Primary
+                                          BasePaletteColor: =RGBA(5, 102, 178, 1)
+                                          Height: =30
+                                          OnSelect: |-
+                                            =Navigate(
+                                                AddressesScreen, 
+                                                ScreenTransition.Fade,
+                                                {recordID: ThisItem.'Job Address'.Id}
+                                            )
+                                          Text: =ThisItem.'Job Address'.Id
+                                          Width: =50
