@@ -1,0 +1,43 @@
+name: Build Power Apps Import Packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/*/src/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build appointment-app import zip
+        run: |
+          APP=apps/appointment-app
+          MSAPP_NAME=$(ls $APP/export/apps/*/N*-document.msapp | head -1)
+          APP_ID=$(basename $(dirname $MSAPP_NAME))
+
+          # Repack src/ into .msapp
+          cd $APP/src
+          zip -r ../build/document.msapp .
+          cd ../../..
+
+          # Place rebuilt .msapp into export folder
+          cp $APP/build/document.msapp $MSAPP_NAME
+
+          # Build the Power Apps import zip
+          cd $APP/export
+          zip -r ../../build/AppointmentApp_import.zip manifest.json apps/
+          cd ../../..
+
+          # Clean up intermediate file
+          rm $APP/build/document.msapp
+
+      - name: Commit updated import zip
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apps/appointment-app/build/AppointmentApp_import.zip
+          git diff --cached --quiet || git commit -m "chore: rebuild AppointmentApp import zip [skip ci]"
+          git push
