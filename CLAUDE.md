@@ -8,12 +8,18 @@ with pre-built import zips ready to upload to Power Apps.
 ```
 apps/
   appointment-app/
-    src/          ← editable source (YAML/JSON) – edit these
+    src/          ← editable YAML/JSON source – edit these
     export/       ← original export package metadata
-    build/        ← AppointmentApp_import.zip (ready to import to Power Apps)
+    build/        ← AppointmentApp_import.zip (ready to import)
+  asset-app/
+    src/          ← original Controls/ JSON source (2021, no YAML yet)
+    export/       ← original export package metadata
+    build/        ← AssetApp_original_import.zip (original Shane Young version)
+docs/
+  sharepoint-schema.md  ← full column schema for all SharePoint lists
 .github/
   workflows/
-    build-powerapps.yml  ← auto-rebuilds zip when src/ changes on main
+    build-powerapps.yml  ← auto-rebuilds appointment-app zip when src/ changes on main
 ```
 
 ## How to Import to Power Apps

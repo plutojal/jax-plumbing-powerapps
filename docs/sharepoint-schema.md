@@ -291,6 +291,64 @@ Company vehicle fleet records.
 
 ---
 
+## Shared Equipment
+**URL:** `.../Lists/Shared Equipment/AllItems.aspx`
+Used by the **Asset Check In/Out app**. Master list of all company assets.
+**Note:** The `Title` column has been renamed to display as `AssetID` — the internal SharePoint name is still `Title`.
+
+| Column | Internal Name | Type | Notes |
+|---|---|---|---|
+| AssetID | Title | Single line | e.g. JX100001. Required. Unique. |
+| AssetCategory | AssetCategory | Choice | Office \| Yard / Tool Store \| Van \| Engineer Owned |
+| BarCode | BarCode | Single line | For future barcode scanning |
+| ItemDescription | ItemDescription | Single line | What the asset is |
+| Make | Make | Single line | Brand |
+| Model | Model | Single line | Model number |
+| SerialNumber | SerialNumber | Single line | Manufacturer serial |
+| PowerType | PowerType | Choice | 240V \| 110V \| Battery \| N/A |
+| Location | Location | Single line | Where it's stored |
+| Status | Status | Choice | Available \| Checked Out \| Under Repair \| Retired |
+| CurrentAssignedTo | CurrentAssignedTo | Person or Group | Null when available |
+| CheckedOutDate | CheckedOutDate | Date and Time | Null when available |
+| ExpectedReturnDate | ExpectedReturnDate | Date and Time | Set on check-out |
+| RequiresPATTest | RequiresPATTest | Yes/No | |
+| PATTestDue | PATTestDue | Date and Time | |
+| TestFrequencyMonths | TestFrequencyMonths | Number | Default 12 |
+| RequiresCalibration | RequiresCalibration | Yes/No | |
+| CalibrationDue | CalibrationDue | Date and Time | |
+| Notes | Notes | Multiple lines | General notes |
+| PurchaseDate | PurchaseDate | Date and Time | |
+| PurchaseValue | PurchaseValue | Currency | |
+| WarrantyExpiry | WarrantyExpiry | Date and Time | |
+| IsActive | IsActive | Yes/No | Soft delete. Default true. |
+
+**Asset ID prefix convention:**
+- `JX1xxxxx` = Office equipment
+- `JX2xxxxx` = Yard / Tool Store equipment
+- `JX3xxxxx` = Van-based equipment
+- `JX4xxxxx` = Engineer Owned equipment
+
+**Current count:** 79 assets (39 Office, 39 Yard/Tool Store, 1 Van partial)
+
+---
+
+## Equipment List Log
+**URL:** `.../Lists/Equipment List Log/AllItems.aspx`
+Used by the **Asset Check In/Out app**. Append-only audit trail — never delete rows.
+
+| Column | Internal Name | Type | Notes |
+|---|---|---|---|
+| Title | Title | Single line | Auto-generated: `AssetID – DD/MM/YYYY HH:MM` |
+| AssetID | AssetID | Lookup → Shared Equipment | Links to asset record |
+| Action | Action | Choice | Check Out \| Check In \| Under Repair \| Returned from Repair |
+| StaffMember | StaffMember | Person or Group | Who performed the action |
+| ActionDateTime | ActionDateTime | Date and Time | Includes time |
+| ExpectedReturnDate | ExpectedReturnDate | Date and Time | Check-outs only |
+| Notes | Notes | Multiple lines | Reason, job ref, condition notes |
+| Condition | Condition | Choice | Good \| Damaged \| Needs Service |
+
+---
+
 ## Other Lists (schema not yet captured)
 The following lists exist in the SharePoint site but schemas have not been captured yet.
 They may be relevant for future apps or automations.
