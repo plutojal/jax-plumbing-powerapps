@@ -1,0 +1,183 @@
+Screens:
+  scrCheckIn:
+    Properties:
+      Fill: =RGBA(245, 247, 250, 1)
+      LoadingSpinnerColor: =RGBA(37, 99, 235, 1)
+    Children:
+      - conCheckInHeader:
+          Control: GroupContainer@1.5.0
+          Properties:
+            X: =0
+            Y: =0
+            Width: =Parent.Width
+            Height: =52
+            Fill: =RGBA(5, 150, 105, 1)
+          Children:
+            - btnCheckInBack:
+                Control: Button@0.0.44
+                Properties:
+                  X: =0
+                  Y: =0
+                  Width: =52
+                  Height: =52
+                  Text: ="‹"
+                  Fill: =RGBA(0, 0, 0, 0)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Size: =22
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  OnSelect: =Navigate(scrAssetDetail, ScreenTransition.UnCover)
+
+            - lblCheckInTitle:
+                Control: Label@2.5.1
+                Properties:
+                  X: =52
+                  Y: =0
+                  Width: =Parent.Width - 52
+                  Height: =52
+                  Text: ="Check In – " & gblSelectedAsset.Title
+                  Size: =16
+                  FontWeight: =FontWeight.Bold
+                  Color: =RGBA(255, 255, 255, 1)
+                  VerticalAlign: =VerticalAlign.Middle
+
+      - conCheckInForm:
+          Control: GroupContainer@1.5.0
+          Properties:
+            X: =12
+            Y: =64
+            Width: =Parent.Width - 24
+            Height: =360
+            Fill: =RGBA(255, 255, 255, 1)
+            RadiusTopLeft: =10
+            RadiusTopRight: =10
+            RadiusBottomLeft: =10
+            RadiusBottomRight: =10
+            DropShadow: =DropShadow.Light
+          Children:
+            - lblCiAssetDesc:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =16
+                  Width: =Parent.Width - 32
+                  Height: =40
+                  Text: =gblSelectedAsset.ItemDescription & If(gblSelectedAsset.Make <> "", " (" & gblSelectedAsset.Make & " " & gblSelectedAsset.Model & ")", "")
+                  Size: =14
+                  FontWeight: =FontWeight.Semibold
+                  Color: =RGBA(17, 24, 39, 1)
+                  Wrap: =true
+
+            - lblCiCheckedOutBy:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =64
+                  Width: =Parent.Width - 32
+                  Height: =20
+                  Text: ="Checked out to: " & gblSelectedAsset.CurrentAssignedTo.DisplayName
+                  Size: =13
+                  Color: =RGBA(107, 114, 128, 1)
+
+            - lblCiConditionLabel:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =100
+                  Width: =Parent.Width - 32
+                  Height: =20
+                  Text: ="Condition on Return *"
+                  Size: =13
+                  FontWeight: =FontWeight.Semibold
+                  Color: =RGBA(17, 24, 39, 1)
+
+            - ddCiCondition:
+                Control: DropDown@2.3.1
+                Properties:
+                  X: =16
+                  Y: =124
+                  Width: =Parent.Width - 32
+                  Height: =40
+                  Items: =["Good","Damaged","Needs Service"]
+                  Default: ="Good"
+                  BorderRadius: =8
+                  BorderColor: =RGBA(209, 213, 219, 1)
+                  Fill: =RGBA(249, 250, 251, 1)
+                  Color: =RGBA(17, 24, 39, 1)
+                  Size: =14
+
+            - lblCiNotesLabel:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =176
+                  Width: =Parent.Width - 32
+                  Height: =20
+                  Text: ="Notes"
+                  Size: =13
+                  FontWeight: =FontWeight.Semibold
+                  Color: =RGBA(17, 24, 39, 1)
+
+            - txtCiNotes:
+                Control: TextInput@2.3.2
+                Properties:
+                  X: =16
+                  Y: =200
+                  Width: =Parent.Width - 32
+                  Height: =100
+                  HintText: ="Optional – any issues, damage notes..."
+                  Mode: =TextMode.MultiLine
+                  BorderRadius: =8
+                  BorderColor: =RGBA(209, 213, 219, 1)
+                  Fill: =RGBA(249, 250, 251, 1)
+                  Color: =RGBA(17, 24, 39, 1)
+                  Size: =14
+
+      - btnConfirmCheckIn:
+          Control: Button@0.0.44
+          Properties:
+            X: =12
+            Y: =Parent.Height - 68
+            Width: =Parent.Width - 24
+            Height: =50
+            Text: ="Confirm Check In"
+            Fill: =RGBA(5, 150, 105, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =16
+            RadiusTopLeft: =10
+            RadiusTopRight: =10
+            RadiusBottomLeft: =10
+            RadiusBottomRight: =10
+            BorderColor: =RGBA(0, 0, 0, 0)
+            OnSelect: |-
+              =Patch(
+                  'Shared Equipment',
+                  gblSelectedAsset,
+                  {
+                      Status: {Value: "Available"},
+                      CurrentAssignedTo: Blank(),
+                      CheckedOutDate: Blank(),
+                      ExpectedReturnDate: Blank()
+                  }
+              );
+              Patch(
+                  'Equipment List Log',
+                  Defaults('Equipment List Log'),
+                  {
+                      Title: gblSelectedAsset.Title & " – " & Text(Now(), "dd/mm/yyyy hh:mm"),
+                      AssetID: {Id: gblSelectedAsset.ID, Value: gblSelectedAsset.Title},
+                      Action: {Value: "Check In"},
+                      StaffMember: {
+                          '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                          Claims: "i:0#.f|membership|" & gblCurrentUser.Email,
+                          DisplayName: gblCurrentUser.FullName,
+                          Email: gblCurrentUser.Email
+                      },
+                      ActionDateTime: Now(),
+                      Notes: txtCiNotes.Text,
+                      Condition: {Value: ddCiCondition.Selected.Value}
+                  }
+              );
+              Set(gblSelectedAsset, LookUp('Shared Equipment', ID = gblSelectedAsset.ID));
+              ClearCollect(colSharedEquipment, Filter('Shared Equipment', IsActive = true));
+              Navigate(scrAssetDetail, ScreenTransition.UnCover);

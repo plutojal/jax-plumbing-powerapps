@@ -1,0 +1,170 @@
+Screens:
+  scrLog:
+    Properties:
+      Fill: =RGBA(245, 247, 250, 1)
+      LoadingSpinnerColor: =RGBA(37, 99, 235, 1)
+    Children:
+      - conLogHeader:
+          Control: GroupContainer@1.5.0
+          Properties:
+            X: =0
+            Y: =0
+            Width: =Parent.Width
+            Height: =52
+            Fill: =RGBA(37, 99, 235, 1)
+          Children:
+            - btnLogBack:
+                Control: Button@0.0.44
+                Properties:
+                  X: =0
+                  Y: =0
+                  Width: =52
+                  Height: =52
+                  Text: ="‹"
+                  Fill: =RGBA(0, 0, 0, 0)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Size: =22
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  OnSelect: =Navigate(scrHome, ScreenTransition.Fade)
+
+            - lblLogTitle:
+                Control: Label@2.5.1
+                Properties:
+                  X: =52
+                  Y: =0
+                  Width: =Parent.Width - 52
+                  Height: =52
+                  Text: ="Audit Log"
+                  Size: =17
+                  FontWeight: =FontWeight.Bold
+                  Color: =RGBA(255, 255, 255, 1)
+                  VerticalAlign: =VerticalAlign.Middle
+
+      - txtLogSearch:
+          Control: TextInput@2.3.2
+          Properties:
+            X: =12
+            Y: =60
+            Width: =Parent.Width - 24
+            Height: =40
+            HintText: ="Filter by Asset ID..."
+            BorderRadius: =8
+            BorderColor: =RGBA(209, 213, 219, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Color: =RGBA(17, 24, 39, 1)
+            Size: =14
+
+      - galLog:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Properties:
+            X: =0
+            Y: =108
+            Width: =Parent.Width
+            Height: =Parent.Height - 108
+            Items: |-
+              =Sort(
+                  Filter(
+                      'Equipment List Log',
+                      txtLogSearch.Text = "" || AssetID.Value in txtLogSearch.Text
+                  ),
+                  ActionDateTime,
+                  SortOrder.Descending
+              )
+            TemplatePadding: =8
+            TemplateSize: =80
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Fill: =RGBA(245, 247, 250, 1)
+          Children:
+            - galLogCard:
+                Control: GroupContainer@1.5.0
+                Properties:
+                  X: =8
+                  Y: =4
+                  Width: =Parent.TemplateWidth - 16
+                  Height: =Parent.TemplateHeight - 8
+                  Fill: =RGBA(255, 255, 255, 1)
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  DropShadow: =DropShadow.Light
+
+            - lblLogAssetID:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =10
+                  Width: =Parent.TemplateWidth - 140
+                  Height: =22
+                  Text: =ThisItem.AssetID.Value
+                  Size: =14
+                  FontWeight: =FontWeight.Bold
+                  Color: =RGBA(17, 24, 39, 1)
+
+            - lblLogAction:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =30
+                  Width: =Parent.TemplateWidth - 140
+                  Height: =20
+                  Text: =ThisItem.StaffMember.DisplayName
+                  Size: =12
+                  Color: =RGBA(107, 114, 128, 1)
+
+            - lblLogNotes:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =50
+                  Width: =Parent.TemplateWidth - 140
+                  Height: =18
+                  Text: =ThisItem.Notes
+                  Size: =11
+                  Color: =RGBA(156, 163, 175, 1)
+
+            - lblLogActionBadge:
+                Control: Label@2.5.1
+                Properties:
+                  X: =Parent.TemplateWidth - 128
+                  Y: =10
+                  Width: =112
+                  Height: =26
+                  Text: =ThisItem.Action.Value
+                  Size: =11
+                  FontWeight: =FontWeight.Semibold
+                  Align: =Align.Center
+                  VerticalAlign: =VerticalAlign.Middle
+                  RadiusTopLeft: =6
+                  RadiusTopRight: =6
+                  RadiusBottomLeft: =6
+                  RadiusBottomRight: =6
+                  Color: |-
+                    =Switch(ThisItem.Action.Value,
+                        "Check Out", RGBA(146, 64, 14, 1),
+                        "Check In", RGBA(22, 101, 52, 1),
+                        "Under Repair", RGBA(153, 27, 27, 1),
+                        "Returned from Repair", RGBA(22, 101, 52, 1),
+                        RGBA(55, 65, 81, 1)
+                    )
+                  Fill: |-
+                    =Switch(ThisItem.Action.Value,
+                        "Check Out", RGBA(254, 243, 199, 1),
+                        "Check In", RGBA(220, 252, 231, 1),
+                        "Under Repair", RGBA(254, 226, 226, 1),
+                        "Returned from Repair", RGBA(220, 252, 231, 1),
+                        RGBA(229, 231, 235, 1)
+                    )
+
+            - lblLogDateTime:
+                Control: Label@2.5.1
+                Properties:
+                  X: =Parent.TemplateWidth - 128
+                  Y: =44
+                  Width: =112
+                  Height: =20
+                  Text: =Text(ThisItem.ActionDateTime, "dd/mm/yy hh:mm")
+                  Size: =11
+                  Align: =Align.Center
+                  Color: =RGBA(107, 114, 128, 1)

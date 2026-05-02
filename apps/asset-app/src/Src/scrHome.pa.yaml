@@ -1,0 +1,183 @@
+Screens:
+  scrHome:
+    Properties:
+      Fill: =RGBA(245, 247, 250, 1)
+      LoadingSpinnerColor: =RGBA(37, 99, 235, 1)
+    Children:
+      - lblHomeTitle:
+          Control: Label@2.5.1
+          Properties:
+            X: =0
+            Y: =0
+            Width: =Parent.Width
+            Height: =52
+            Text: ="JAX Asset Manager"
+            Size: =18
+            FontWeight: =FontWeight.Bold
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(37, 99, 235, 1)
+            PaddingLeft: =16
+            Align: =Align.Left
+            VerticalAlign: =VerticalAlign.Middle
+
+      - txtSearch:
+          Control: TextInput@2.3.2
+          Properties:
+            X: =12
+            Y: =60
+            Width: =Parent.Width - 24
+            Height: =40
+            HintText: ="Search by Asset ID, description..."
+            BorderRadius: =8
+            BorderColor: =RGBA(209, 213, 219, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Color: =RGBA(17, 24, 39, 1)
+            Size: =14
+
+      - ddCategoryFilter:
+          Control: DropDown@2.3.1
+          Properties:
+            X: =12
+            Y: =108
+            Width: =(Parent.Width - 30) / 2
+            Height: =38
+            Items: =["All Categories","Office","Yard / Tool Store","Van","Engineer Owned"]
+            Default: ="All Categories"
+            BorderRadius: =8
+            BorderColor: =RGBA(209, 213, 219, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Color: =RGBA(17, 24, 39, 1)
+            Size: =13
+
+      - ddStatusFilter:
+          Control: DropDown@2.3.1
+          Properties:
+            X: =ddCategoryFilter.X + ddCategoryFilter.Width + 6
+            Y: =108
+            Width: =(Parent.Width - 30) / 2
+            Height: =38
+            Items: =["All Statuses","Available","Checked Out","Under Repair","Retired"]
+            Default: ="All Statuses"
+            BorderRadius: =8
+            BorderColor: =RGBA(209, 213, 219, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Color: =RGBA(17, 24, 39, 1)
+            Size: =13
+
+      - galAssets:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Properties:
+            X: =0
+            Y: =154
+            Width: =Parent.Width
+            Height: =Parent.Height - 154 - 52
+            Items: |-
+              =Filter(
+                  colSharedEquipment,
+                  (txtSearch.Text = "" || Title in txtSearch.Text || ItemDescription in txtSearch.Text),
+                  (ddCategoryFilter.Selected.Value = "All Categories" || AssetCategory.Value = ddCategoryFilter.Selected.Value),
+                  (ddStatusFilter.Selected.Value = "All Statuses" || Status.Value = ddStatusFilter.Selected.Value)
+              )
+            TemplatePadding: =8
+            TemplateSize: =72
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Fill: =RGBA(245, 247, 250, 1)
+          Children:
+            - galAssetCard:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  X: =8
+                  Y: =4
+                  Width: =Parent.TemplateWidth - 16
+                  Height: =Parent.TemplateHeight - 8
+                  Fill: =RGBA(255, 255, 255, 1)
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  DropShadow: =DropShadow.Light
+                  OnSelect: |-
+                    =Set(gblSelectedAsset, ThisItem);
+                    Navigate(scrAssetDetail, ScreenTransition.Fade)
+
+            - lblAssetID:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =8
+                  Width: =Parent.TemplateWidth - 130
+                  Height: =24
+                  Text: =ThisItem.Title
+                  Size: =14
+                  FontWeight: =FontWeight.Bold
+                  Color: =RGBA(17, 24, 39, 1)
+
+            - lblAssetDesc:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =30
+                  Width: =Parent.TemplateWidth - 130
+                  Height: =20
+                  Text: =ThisItem.ItemDescription
+                  Size: =12
+                  Color: =RGBA(107, 114, 128, 1)
+
+            - lblLocation:
+                Control: Label@2.5.1
+                Properties:
+                  X: =16
+                  Y: =48
+                  Width: =Parent.TemplateWidth - 130
+                  Height: =18
+                  Text: =ThisItem.Location
+                  Size: =11
+                  Color: =RGBA(107, 114, 128, 1)
+
+            - lblStatus:
+                Control: Label@2.5.1
+                Properties:
+                  X: =Parent.TemplateWidth - 120
+                  Y: =20
+                  Width: =104
+                  Height: =28
+                  Text: =ThisItem.Status.Value
+                  Size: =12
+                  FontWeight: =FontWeight.Semibold
+                  Align: =Align.Center
+                  VerticalAlign: =VerticalAlign.Middle
+                  RadiusTopLeft: =6
+                  RadiusTopRight: =6
+                  RadiusBottomLeft: =6
+                  RadiusBottomRight: =6
+                  Color: |-
+                    =Switch(ThisItem.Status.Value,
+                        "Available", RGBA(22, 101, 52, 1),
+                        "Checked Out", RGBA(146, 64, 14, 1),
+                        "Under Repair", RGBA(153, 27, 27, 1),
+                        RGBA(75, 85, 99, 1)
+                    )
+                  Fill: |-
+                    =Switch(ThisItem.Status.Value,
+                        "Available", RGBA(220, 252, 231, 1),
+                        "Checked Out", RGBA(254, 243, 199, 1),
+                        "Under Repair", RGBA(254, 226, 226, 1),
+                        RGBA(229, 231, 235, 1)
+                    )
+
+      - btnViewLog:
+          Control: Button@0.0.44
+          Properties:
+            X: =0
+            Y: =Parent.Height - 52
+            Width: =Parent.Width
+            Height: =52
+            Text: ="View Audit Log"
+            Fill: =RGBA(37, 99, 235, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =15
+            BorderRadius: =0
+            OnSelect: =Navigate(scrLog, ScreenTransition.Fade)
