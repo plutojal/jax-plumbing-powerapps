@@ -179,20 +179,124 @@
 ---
 
 ## Job Scheduling
-> Schema not yet captured — used by ProjectSchedulerScreen in the Appointment App.
+**URL:** `.../Lists/Job Scheduling/AllItems.aspx`
+Used by **ProjectSchedulerScreen** in the Appointment App.
+
+| Column | Type | Notes |
+|---|---|---|
+| Title | Single line of text | |
+| Schedule Description | Single line of text | |
+| Job | Lookup | → Jobs |
+| Visit Type | Choice | Type of visit/visit category |
+| Staff | Lookup | → Staff |
+| Start Date | Date and Time | |
+| End Date | Date and Time | |
+| Start Time | Choice | Time slot |
+| End Time | Choice | Time slot |
+| Working Days | Choice | Days covered by schedule |
+| Schedule Notes | Multiple lines of text | |
+| Planner Task ID | Single line of text | |
+| Outlook Calendar ID | Single line of text | |
+| Update Calendar | Yes/No | Flag to trigger calendar sync |
+| Update Planner | Yes/No | Flag to trigger Planner sync |
+| Created | Date and Time | |
+| Modified | Date and Time | |
+| Created By | Person or Group | |
+| Modified By | Person or Group | |
 
 ---
 
-## Other Lists (not yet in Appointment App)
-The following lists exist in the SharePoint site but are not currently connected
-to the Appointment App. They may be relevant for future apps or automations.
+## Staff
+**URL:** `.../Lists/Staff/AllItems.aspx`
+Referenced by Appointments, Job Scheduling, Jobs (Project Owner), Qualification Records, Vehicles.
+
+| Column | Type | Notes |
+|---|---|---|
+| Title | Single line of text | Staff member name/reference |
+| Profile | Person or Group | Links to M365 user account |
+| Staff Type | Choice | e.g. Engineer, Admin, etc. |
+| Calendar Access Allowed | Yes/No | Whether staff can access calendar features |
+| Created | Date and Time | |
+| Modified | Date and Time | |
+| Created By | Person or Group | |
+| Modified By | Person or Group | |
+
+---
+
+## Qualification Types
+**URL:** `.../Lists/Qualification Types/AllItems.aspx`
+Reference list for types of qualifications held by staff.
+
+| Column | Type | Notes |
+|---|---|---|
+| Title | Single line of text | Qualification name |
+| Code | Single line of text | Short reference code |
+| Renewal (Years) | Number | How often the qualification must be renewed |
+| Training Provider | Single line of text | |
+| Description | Single line of text | |
+| Created | Date and Time | |
+| Modified | Date and Time | |
+| Created By | Person or Group | |
+| Modified By | Person or Group | |
+
+---
+
+## Qualification Records
+**URL:** `.../Lists/Qualification Records/AllItems.aspx`
+Individual qualification records per staff member.
+
+| Column | Type | Notes |
+|---|---|---|
+| Title | Single line of text | |
+| Staff | Lookup | → Staff |
+| Qualification Name | Lookup | → Qualification Types |
+| Qualification Name: Code | Lookup | → Qualification Types (Code field) |
+| Start Date | Date and Time | When qualification was obtained |
+| Expiry Date | Date and Time | When qualification expires |
+| Certificate Link | Hyperlink or Picture | Link to certificate document |
+| Notes | Multiple lines of text | |
+| Created | Date and Time | |
+| Modified | Date and Time | |
+| Created By | Person or Group | |
+| Modified By | Person or Group | |
+
+---
+
+## Vehicles
+**URL:** `.../Lists/Vehicles/AllItems.aspx`
+Company vehicle fleet records.
+
+| Column | Type | Notes |
+|---|---|---|
+| Title | Single line of text | Vehicle name/reference |
+| Registration | Single line of text | Number plate |
+| Driver | Lookup | → Staff (assigned driver) |
+| Year | Number | Year of manufacture |
+| Make | Single line of text | e.g. Ford, Vauxhall |
+| Model | Single line of text | |
+| Description | Single line of text | |
+| Colour | Single line of text | |
+| Transmission | Choice | e.g. Manual, Automatic |
+| Fuel Type | Choice | e.g. Diesel, Petrol, Electric |
+| Vehicle Type | Choice | e.g. Van, Car |
+| Tracker | Yes/No | Whether vehicle has a GPS tracker |
+| Next Service Date | Date and Time | |
+| Tax Due Date | Date and Time | |
+| MOT Due Date | Date and Time | |
+| VIN | Single line of text | Vehicle Identification Number |
+| Created | Date and Time | |
+| Modified | Date and Time | |
+| Created By | Person or Group | |
+| Modified By | Person or Group | |
+
+---
+
+## Other Lists (schema not yet captured)
+The following lists exist in the SharePoint site but schemas have not been captured yet.
+They may be relevant for future apps or automations.
 
 | List | Notes |
 |---|---|
-| Staff | Staff/engineer records |
-| Qualification Types | Types of engineer qualifications |
-| Qualification Records | Individual qualification records per staff member |
-| Vehicles | Company vehicle records |
 | Planner: Servicing | Planner board for servicing jobs |
 | Planner: Breakdown | Planner board for breakdown callouts |
 | Planner: Quotes | Planner board for quotes |
@@ -206,11 +310,23 @@ to the Appointment App. They may be relevant for future apps or automations.
 ## Relationships Overview
 ```
 Customers
-  ├── Job Addresses       (Job Addresses.Customer → Customers)
-  │     └── Appliances    (Appliances.Customer → Customers,
-  │                        Appliances.Job Address → Job Addresses)
-  └── Jobs                (Jobs.Customer → Customers,
-                           Jobs.Job Address → Job Addresses)
-                             └── Appointments  (Appointments.Customer, .Job Address,
-                                                .Appliances, .Job → respective lists)
+  ├── Job Addresses         (Job Addresses.Customer → Customers)
+  │     └── Appliances      (Appliances.Customer → Customers,
+  │                          Appliances.Job Address → Job Addresses)
+  └── Jobs                  (Jobs.Customer → Customers,
+        │                    Jobs.Job Address → Job Addresses,
+        │                    Jobs.Project Owner → Staff)
+        ├── Appointments     (Appointments.Customer, .Job Address,
+        │                     .Appliances, .Job → respective lists,
+        │                     .Staff → Staff)
+        └── Job Scheduling   (Job Scheduling.Job → Jobs,
+                              Job Scheduling.Staff → Staff)
+
+Staff
+  ├── Appointments          (.Staff → Staff)
+  ├── Job Scheduling        (.Staff → Staff)
+  ├── Jobs                  (.Project Owner → Staff)
+  ├── Vehicles              (.Driver → Staff)
+  └── Qualification Records (.Staff → Staff)
+        └── Qualification Types  (.Qualification Name → Qualification Types)
 ```

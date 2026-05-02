@@ -45,9 +45,8 @@ Jobs (Customer → Customers, Job Address → Job Addresses)
 ```
 
 ## Other SharePoint Lists (not yet in app)
-Staff, Qualification Types, Qualification Records, Vehicles,
-Planner: Servicing, Breakdown, Quotes, Quoted Works, General Jobs, Projects,
-Asset Register
+Staff, Qualification Types, Qualification Records, Vehicles — schemas documented in `docs/sharepoint-schema.md`
+Planner: Servicing, Breakdown, Quotes, Quoted Works, General Jobs, Projects, Asset Register — schemas not yet captured
 
 ## Notes
 - Some SharePoint columns have internal names that differ from display names
