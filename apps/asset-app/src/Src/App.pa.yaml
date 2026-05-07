@@ -1,8 +1,0 @@
-App:
-  Properties:
-    OnStart: |-
-      =Set(gblCurrentUser, User());
-      ClearCollect(
-          colSharedEquipment,
-          Filter('Shared Equipment', IsActive = true)
-      );
