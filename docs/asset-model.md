@@ -78,7 +78,7 @@ Filter('Asset Register', Status.Value = "Checked Out")
 | Column | Type | Power Fx field | Notes |
 |---|---|---|---|
 | Title | Single line | `Title` | Auto-label e.g. "JX100001 – 08/05/2026 14:30" |
-| AssetID | Lookup → Asset Register | `AssetID` | `{Id: assetRecord.ID, Value: assetRecord.Title}` |
+| AssetID | Single line of text | `AssetID` | Asset title string e.g. "JX100001" |
 | Action | Choice | `Action.Value` | Check Out / Check In / Under Repair / Returned from Repair |
 | StaffMember | Lookup → Staff | `StaffMember` | `{Id: staffRecord.ID, Value: staffRecord.Title}` |
 | DateTime | Date/Time | `DateTime` | When action occurred (column name is `DateTime`, not `ActionDateTime`) |
@@ -91,8 +91,8 @@ Filter('Asset Register', Status.Value = "Checked Out")
 ```
 Patch('Asset Log', Defaults('Asset Log'), {
     Title: assetRecord.Title & " - " & Text(Now(), "dd/mm/yyyy hh:mm"),
-    AssetID: {Id: assetRecord.ID, Value: assetRecord.Title},
-    Action: {Value: "Check Out"},
+    AssetID: assetRecord.Title,
+    Action: "Check Out",
     DateTime: Now(),
     ExpectedReturnDate: selectedReturnDate
 })
@@ -102,8 +102,8 @@ Patch('Asset Log', Defaults('Asset Log'), {
 ```
 Patch('Asset Log', Defaults('Asset Log'), {
     Title: assetRecord.Title & " - " & Text(Now(), "dd/mm/yyyy hh:mm"),
-    AssetID: {Id: assetRecord.ID, Value: assetRecord.Title},
-    Action: {Value: "Check In"},
+    AssetID: assetRecord.Title,
+    Action: "Check In",
     DateTime: Now()
 })
 ```
