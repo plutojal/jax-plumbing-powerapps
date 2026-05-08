@@ -25,9 +25,9 @@ jobs:
           MSAPP_FILENAME=$(ls $APP/export/apps/$APP_ID/N*-document.msapp | xargs basename)
           TMPDIR=$(mktemp -d)
 
-          # Repack src/ into .msapp
+          # Repack src/ into .msapp (exclude checksum.json — stale after any edit)
           cd $APP/src
-          zip -r $TMPDIR/document.msapp .
+          zip -r $TMPDIR/document.msapp . -x "checksum.json"
           cd $GITHUB_WORKSPACE
 
           # Build correct Power Apps import structure
@@ -50,9 +50,9 @@ jobs:
           MSAPP_FILENAME=$(ls $APP/export/apps/$APP_ID/N*-document.msapp | xargs basename)
           TMPDIR=$(mktemp -d)
 
-          # Repack src/ into .msapp
+          # Repack src/ into .msapp (exclude checksum.json — stale after any edit)
           cd $APP/src
-          zip -r $TMPDIR/document.msapp .
+          zip -r $TMPDIR/document.msapp . -x "checksum.json"
           cd $GITHUB_WORKSPACE
 
           # Build correct Power Apps import structure
