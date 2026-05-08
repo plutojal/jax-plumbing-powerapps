@@ -45,28 +45,7 @@ jobs:
 
       - name: Build asset-app import zip
         run: |
-          APP=apps/asset-app
-          APP_ID=$(ls $APP/export/apps/)
-          MSAPP_FILENAME=$(ls $APP/export/apps/$APP_ID/N*-document.msapp | xargs basename)
-          TMPDIR=$(mktemp -d)
-
-          # Repack src/ into .msapp (exclude checksum.json — stale after any edit)
-          cd $APP/src
-          zip -r $TMPDIR/document.msapp . -x "checksum.json"
-          cd $GITHUB_WORKSPACE
-
-          # Build correct Power Apps import structure
-          mkdir -p $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID
-          cp $APP/export/manifest.json $TMPDIR/pkg/
-          cp $APP/export/apps/$APP_ID/*.json $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID/
-          cp $APP/export/apps/$APP_ID/*-logoSmallFile $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID/ 2>/dev/null || true
-          cp $TMPDIR/document.msapp $TMPDIR/pkg/Microsoft.PowerApps/apps/$APP_ID/$MSAPP_FILENAME
-
-          # Build the import zip fresh
-          rm -f $APP/build/AssetApp_import.zip
-          cd $TMPDIR/pkg
-          zip -r $GITHUB_WORKSPACE/$APP/build/AssetApp_import.zip .
-          rm -rf $TMPDIR
+          python3 apps/asset-app/build_asset_app.py
 
       - name: Commit updated import zips
         run: |
