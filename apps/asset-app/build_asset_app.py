@@ -36,6 +36,9 @@ with zipfile.ZipFile(ORIG_MSAPP, 'r') as orig, zipfile.ZipFile(buf, 'w', zipfile
         orig_paths.add(rel)
         if rel == 'checksum.json':
             continue  # always omit — stale after any edit
+        # Exclude old Shane Young screens replaced by new YAML-driven screens
+        if rel in ('Controls/11.json', 'Controls/34.json'):
+            continue
         if rel in src_files:
             with open(src_files[rel], 'rb') as f:
                 out.writestr(norm, f.read())
