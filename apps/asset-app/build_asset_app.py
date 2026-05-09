@@ -29,9 +29,11 @@ for root, _, files in os.walk(SRC):
 import io
 buf = io.BytesIO()
 with zipfile.ZipFile(ORIG_MSAPP, 'r') as orig, zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as out:
+    orig_paths = set()
     for item in orig.infolist():
         norm = item.filename.replace('\\', '/')
         rel = norm.lstrip('/')
+        orig_paths.add(rel)
         if rel == 'checksum.json':
             continue  # always omit — stale after any edit
         if rel in src_files:
@@ -39,6 +41,11 @@ with zipfile.ZipFile(ORIG_MSAPP, 'r') as orig, zipfile.ZipFile(buf, 'w', zipfile
                 out.writestr(norm, f.read())
         else:
             out.writestr(norm, orig.read(item.filename))
+    # Write new src files not present in original .msapp (e.g. Src/*.pa.yaml)
+    for rel, full in sorted(src_files.items()):
+        if rel not in orig_paths and rel != 'checksum.json':
+            with open(full, 'rb') as f:
+                out.writestr(rel, f.read())
 
 # Validate all JSON in the patched .msapp
 buf.seek(0)
