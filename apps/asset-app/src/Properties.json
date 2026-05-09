@@ -3,7 +3,7 @@
   "Name": "JAX Asset Manager",
   "Id": "8f42ff39-6599-4a4b-a0fe-38ae840af553",
   "FileID": "8f42ff39-6599-4a4b-a0fe-38ae840af553",
-  "LocalConnectionReferences": "{}",
+  "LocalConnectionReferences": "{\"03a58269-6017-411d-8a3b-b56b2bfab979\":{\"id\":\"03a58269-6017-411d-8a3b-b56b2bfab979\",\"connectionInstanceId\":\"/providers/microsoft.powerapps/apis/shared_sharepointonline/connections/4144a835cec941aba09a9f666e33d99a\",\"dataSources\":[\"Asset Register\",\"Asset Log\"],\"datasets\":{\"https://jaxplumbinggy.sharepoint.com/sites/JaxPlumbingCRMHub-Live\":{\"dataSources\":{\"Asset Register\":{\"tableName\":\"a87e1127-225f-4577-94d3-e8b1e3fcb448\"},\"Asset Log\":{\"tableName\":\"e8ea6875-63fd-44ba-a636-2a32e2e9cbfa\"}}}},\"dependencies\":{},\"connectionParameters\":{\"sku\":\"Enterprise\"},\"dependents\":[],\"connectionRef\":{\"id\":\"/providers/microsoft.powerapps/apis/shared_sharepointonline\",\"displayName\":\"SharePoint\",\"iconUri\":\"https://connectoricons-prod.azureedge.net/releases/v1.0.1458/1.0.1458.2381/sharepointonline/icon.png\",\"parameterHints\":{},\"apiTier\":\"Standard\"}}}",
   "LocalDatabaseReferences": "",
   "LibraryDependencies": "[]",
   "AppPreviewFlagsMap": {
